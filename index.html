@@ -3,518 +3,1252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MYA - إضافات ومميزات</title>
+    <title>MYA PDF - إضافة الفواتير الإلكترونية</title>
+    <link rel="icon" href="logo128.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         :root {
-            --primary: #6c5ce7;
-            --primary-dark: #5a4bd1;
-            --dark: #0a0a1a;
-            --card: #12122a;
-            --card-hover: #1a1a3e;
-            --text: #e0e0e0;
-            --muted: #888;
-            --success: #00b894;
-            --danger: #fd79a8;
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --accent: #06b6d4;
+            --dark: #030712;
+            --dark2: #0a0f1e;
+            --card: rgba(15,23,42,0.7);
+            --card-border: rgba(99,102,241,0.12);
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+            --green: #22c55e;
+            --rose: #f43f5e;
+            --amber: #f59e0b;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
             background: var(--dark);
             color: var(--text);
-            min-height: 100vh;
             overflow-x: hidden;
-            line-height: 1.7;
+            line-height: 1.6;
         }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 5%;
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(108,92,231,0.1);
-            background: rgba(10,10,26,0.8);
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links { display: flex; gap: 25px; list-style: none; }
-        .nav-links a {
-            color: var(--muted);
-            text-decoration: none;
-            transition: 0.3s;
-            font-size: 0.95rem;
-        }
-        .nav-links a:hover { color: #fff; }
-        .nav-links a.active { color: #6c5ce7; }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
-
-        .hero {
-            text-align: center;
-            padding: 80px 5% 60px;
-            position: relative;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -200px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(108,92,231,0.15), transparent 70%);
+        /* ===== ANIMATED BACKGROUND ===== */
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
             pointer-events: none;
         }
 
-        .badge {
-            display: inline-block;
-            padding: 6px 16px;
-            background: rgba(108,92,231,0.15);
-            border: 1px solid rgba(108,92,231,0.3);
-            border-radius: 50px;
-            font-size: 0.85rem;
-            color: #a29bfe;
-            margin-bottom: 24px;
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        h1 {
-            font-size: 3rem;
+        .bg-glow-1 { top: -200px; right: -100px; background: #6366f1; }
+        .bg-glow-2 { bottom: -200px; left: -100px; background: #06b6d4; }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 16px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            background: rgba(3,7,18,0.7);
+            border-bottom: 1px solid var(--card-border);
+            transition: 0.3s;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-brand img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+        }
+
+        .nav-brand span {
+            font-size: 1.2rem;
             font-weight: 800;
-            line-height: 1.3;
-            margin-bottom: 20px;
-        }
-
-        h1 span {
-            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            background: linear-gradient(135deg, #6366f1, #06b6d4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: #fff; }
+
+        .nav-cta {
+            background: linear-gradient(135deg, #6366f1, #06b6d4);
+            color: #fff !important;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 20px rgba(99,102,241,0.3);
+        }
+
+        .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 25px rgba(99,102,241,0.4); }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 160px 5% 100px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(99,102,241,0.2);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--primary-light);
+            margin-bottom: 28px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.2rem);
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, #6366f1, #06b6d4, #22c55e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: gradientShift 4s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .hero p {
             font-size: 1.15rem;
             color: var(--muted);
-            max-width: 600px;
+            max-width: 580px;
             margin: 0 auto 40px;
             line-height: 1.8;
+            animation: fadeInUp 0.8s ease 0.2s both;
         }
 
-        .buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
 
         .btn {
-            padding: 12px 28px;
-            border-radius: 10px;
+            padding: 14px 32px;
+            border-radius: 12px;
             font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
-            transition: 0.3s;
+            transition: all 0.3s;
             border: none;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+        .btn-glow {
+            background: linear-gradient(135deg, #6366f1, #06b6d4);
             color: #fff;
-            box-shadow: 0 4px 25px rgba(108,92,231,0.4);
+            box-shadow: 0 4px 30px rgba(99,102,241,0.4);
         }
 
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 35px rgba(108,92,231,0.5); }
+        .btn-glow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 40px rgba(99,102,241,0.5);
+        }
 
-        .btn-outline {
-            background: transparent;
+        .btn-ghost {
+            background: rgba(255,255,255,0.05);
             color: #fff;
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
         }
 
-        .btn-outline:hover { border-color: #6c5ce7; background: rgba(108,92,231,0.1); }
-
-        .btn-store {
-            background: #fff;
-            color: #000;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s;
+        .btn-ghost:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(99,102,241,0.3);
         }
 
-        .btn-store:hover { background: #e0e0e0; }
-
-        section { padding: 60px 0; }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
+        /* ===== MOCK UI ===== */
+        .hero-mockup {
+            margin-top: 60px;
+            animation: fadeInUp 1s ease 0.6s both;
         }
 
-        .section-title h2 {
-            font-size: 2rem;
-            margin-bottom: 12px;
-        }
-
-        .section-title p { color: var(--muted); }
-
-        .extensions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 24px;
-            max-width: 1200px;
+        .mockup-window {
+            max-width: 900px;
             margin: 0 auto;
-            padding: 0 5%;
-        }
-
-        .extension-card {
             background: var(--card);
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid var(--card-border);
             border-radius: 16px;
-            padding: 30px;
-            transition: 0.3s;
-            position: relative;
             overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+            backdrop-filter: blur(20px);
         }
 
-        .extension-card:hover {
-            border-color: rgba(108,92,231,0.3);
-            transform: translateY(-4px);
-        }
-
-        .ext-header {
+        .mockup-titlebar {
             display: flex;
             align-items: center;
-            gap: 16px;
-            margin-bottom: 20px;
+            gap: 8px;
+            padding: 14px 18px;
+            background: rgba(15,23,42,0.8);
+            border-bottom: 1px solid var(--card-border);
         }
 
-        .ext-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            background: rgba(108,92,231,0.15);
-            flex-shrink: 0;
-        }
+        .mockup-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .mockup-dot.red { background: #f87171; }
+        .mockup-dot.yellow { background: #fbbf24; }
+        .mockup-dot.green { background: #34d399; }
 
-        .ext-info h3 { font-size: 1.1rem; margin-bottom: 4px; }
-        .ext-info .version { color: var(--muted); font-size: 0.85rem; }
-
-        .ext-desc {
-            color: var(--muted);
-            font-size: 0.92rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        .ext-features {
-            list-style: none;
-            margin-bottom: 24px;
-        }
-
-        .ext-features li {
-            padding: 6px 0;
-            font-size: 0.9rem;
-            color: #bbb;
-        }
-
-        .ext-features li::before {
-            content: '✓ ';
-            color: var(--success);
-            font-weight: bold;
-        }
-
-        .ext-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 16px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .ext-status {
-            padding: 4px 12px;
-            border-radius: 20px;
+        .mockup-url {
+            flex: 1;
+            margin: 0 12px;
+            padding: 6px 14px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
             font-size: 0.8rem;
-            font-weight: 600;
+            color: var(--muted);
+            text-align: center;
         }
 
-        .status-free { background: rgba(0,184,148,0.15); color: #00b894; }
-        .status-new { background: rgba(108,92,231,0.15); color: #a29bfe; }
-
-        .features {
+        .mockup-body {
+            padding: 30px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 5%;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
         }
 
-        .feature-card {
-            background: var(--card);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 30px 24px;
+        .mock-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 20px;
             transition: 0.3s;
         }
 
-        .feature-card:hover {
-            border-color: rgba(108,92,231,0.3);
-            transform: translateY(-4px);
+        .mock-card:hover {
+            border-color: rgba(99,102,241,0.3);
+            background: rgba(99,102,241,0.05);
         }
 
-        .icon {
-            width: 46px;
-            height: 46px;
+        .mock-card-icon {
+            width: 42px;
+            height: 42px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
-            margin-bottom: 16px;
+            font-size: 1.2rem;
+            margin-bottom: 14px;
         }
 
-        .icon-1 { background: rgba(108,92,231,0.15); }
-        .icon-2 { background: rgba(253,121,168,0.15); }
-        .icon-3 { background: rgba(0,206,201,0.15); }
-        .icon-4 { background: rgba(253,203,110,0.15); }
+        .mock-card-icon.purple { background: rgba(99,102,241,0.15); }
+        .mock-card-icon.cyan { background: rgba(6,182,212,0.15); }
+        .mock-card-icon.green { background: rgba(34,197,94,0.15); }
 
-        .feature-card h3 { font-size: 1.1rem; margin-bottom: 10px; }
-        .feature-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+        .mock-card h4 { font-size: 0.9rem; margin-bottom: 6px; }
+        .mock-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
 
-        .stats {
+        .mock-card .mock-stat {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-top: 10px;
+        }
+
+        .mock-card .mock-stat.purple { color: #818cf8; }
+        .mock-card .mock-stat.cyan { color: #22d3ee; }
+        .mock-card .mock-stat.green { color: #4ade80; }
+
+        /* ===== FEATURES ===== */
+        section { position: relative; z-index: 1; }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header .tag {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(6,182,212,0.1);
+            border: 1px solid rgba(6,182,212,0.2);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 14px;
+        }
+
+        .section-header p {
+            color: var(--muted);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .features-section { padding: 100px 5%; }
+
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 32px 28px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #6366f1, transparent);
+            opacity: 0;
+            transition: 0.4s;
+        }
+
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(99,102,241,0.2);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .feature-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+
+        .fi-1 { background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(99,102,241,0.05)); }
+        .fi-2 { background: linear-gradient(135deg, rgba(6,182,212,0.2), rgba(6,182,212,0.05)); }
+        .fi-3 { background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(34,197,94,0.05)); }
+        .fi-4 { background: linear-gradient(135deg, rgba(244,63,94,0.2), rgba(244,63,94,0.05)); }
+        .fi-5 { background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(245,158,11,0.05)); }
+        .fi-6 { background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(168,85,247,0.05)); }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* ===== EXTENSION SHOWCASE ===== */
+        .showcase-section { padding: 100px 5%; }
+
+        .showcase-card {
             max-width: 1000px;
             margin: 0 auto;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+        }
+
+        .showcase-info {
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .showcase-info .ext-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            background: rgba(34,197,94,0.1);
+            border: 1px solid rgba(34,197,94,0.2);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            color: var(--green);
+            font-weight: 600;
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+
+        .showcase-info h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .showcase-info .desc {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .showcase-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .showcase-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        .showcase-features .check {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(34,197,94,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: var(--green);
+            flex-shrink: 0;
+        }
+
+        .showcase-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #6366f1, #06b6d4);
+            color: #fff;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            width: fit-content;
+            box-shadow: 0 4px 25px rgba(99,102,241,0.3);
+        }
+
+        .showcase-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 35px rgba(99,102,241,0.4);
+        }
+
+        .showcase-preview {
+            background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(6,182,212,0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .showcase-preview::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(99,102,241,0.15);
+            filter: blur(80px);
+        }
+
+        .preview-content {
+            position: relative;
+            z-index: 1;
             text-align: center;
         }
 
-        .stat h2 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+        .preview-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #6366f1, #06b6d4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 20px;
+            box-shadow: 0 15px 50px rgba(99,102,241,0.4);
+        }
+
+        .preview-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .preview-sub {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .preview-stats {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .preview-stat { text-align: center; }
+        .preview-stat .num { font-size: 1.3rem; font-weight: 800; color: var(--primary-light); }
+        .preview-stat .label { font-size: 0.75rem; color: var(--muted); }
+
+        /* ===== SCREENSHOTS GALLERY ===== */
+        .gallery-section { padding: 100px 5%; }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            background: var(--card);
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: rgba(99,102,241,0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+            transition: 0.4s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85));
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+        .gallery-overlay span {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .gallery-overlay .view-btn {
+            padding: 6px 14px;
+            background: rgba(99,102,241,0.3);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #fff;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99,102,241,0.4);
+            transition: 0.3s;
+        }
+
+        .gallery-overlay .view-btn:hover {
+            background: rgba(99,102,241,0.5);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .lightbox.active { display: flex; }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2.5rem;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            padding: 16px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.08);
+            transition: 0.3s;
+            border: none;
+        }
+
+        .lightbox-nav:hover { background: rgba(255,255,255,0.15); }
+        .lightbox-prev { left: 20px; }
+        .lightbox-next { right: 20px; }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 0.9rem;
+            background: rgba(0,0,0,0.5);
+            padding: 6px 16px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* ===== STATS ===== */
+        .stats-section {
+            padding: 80px 5%;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px 16px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(99,102,241,0.3);
+            transform: translateY(-4px);
+        }
+
+        .stat-card .num {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #6366f1, #06b6d4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .stat p { color: var(--muted); margin-top: 8px; }
-
-        .legal-section {
-            background: var(--card);
-            border-radius: 16px;
-            padding: 40px;
-            margin: 40px 0;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .legal-section h2 {
-            font-size: 1.4rem;
-            margin-bottom: 16px;
-        }
-
-        .legal-section p, .legal-section li {
+        .stat-card .label {
+            font-size: 0.85rem;
             color: var(--muted);
-            font-size: 0.92rem;
-            line-height: 1.8;
+            margin-top: 6px;
+        }
+
+        /* ===== LEGAL ===== */
+        .legal-section {
+            padding: 60px 5%;
+        }
+
+        .legal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .legal-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 28px 24px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .legal-card:hover {
+            border-color: rgba(99,102,241,0.3);
+            transform: translateY(-3px);
+        }
+
+        .legal-card .lc-icon {
+            font-size: 1.5rem;
             margin-bottom: 12px;
         }
 
-        .legal-section ul {
-            padding-right: 20px;
+        .legal-card h4 {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 8px;
         }
 
-        .footer {
-            text-align: center;
-            padding: 40px 5%;
-            border-top: 1px solid rgba(255,255,255,0.05);
+        .legal-card p {
             color: var(--muted);
-            font-size: 0.88rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            position: relative;
+            z-index: 1;
+            padding: 50px 5% 30px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-brand img { width: 28px; height: 28px; border-radius: 6px; }
+
+        .footer-brand span {
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .footer-links {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
+            gap: 24px;
+            list-style: none;
         }
 
         .footer-links a {
             color: var(--muted);
             text-decoration: none;
+            font-size: 0.85rem;
             transition: 0.3s;
         }
 
-        .footer-links a:hover { color: #6c5ce7; }
+        .footer-links a:hover { color: #fff; }
 
-        .footer a { color: #6c5ce7; text-decoration: none; }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .mockup-body { grid-template-columns: 1fr 1fr; }
+            .showcase-card { grid-template-columns: 1fr; }
+            .showcase-preview { min-height: 280px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+            .gallery-item img { height: 200px; }
+        }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
             .nav-links { display: none; }
-            .extensions-grid { grid-template-columns: 1fr; }
-            .legal-section { padding: 24px; }
+            .mockup-body { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .gallery-item img { height: 220px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body>
 
+<div class="bg-grid"></div>
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+
+<!-- NAVBAR -->
 <nav>
-    <div class="logo">MYA</div>
+    <a href="index.html" class="nav-brand">
+        <img src="logo128.png" alt="MYA">
+        <span>MYA</span>
+    </a>
     <ul class="nav-links">
-        <li><a href="index.html" class="active">الرئيسية</a></li>
-        <li><a href="#extensions">الإضافات</a></li>
         <li><a href="#features">المميزات</a></li>
+        <li><a href="#extension">الإضافة</a></li>
         <li><a href="privacy.html">الخصوصية</a></li>
         <li><a href="terms.html">الشروط</a></li>
         <li><a href="copyright.html">الحقوق</a></li>
-        <li><a href="#contact">تواصل معنا</a></li>
+        <li><a href="https://chrome.google.com/webstore/detail/eta-pdf-mya/hljbkmmbhgijcknkipdbgmejdflakc" target="_blank" class="nav-cta">تثبيت الإضافة</a></li>
     </ul>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
-    <div class="badge">🧩 إضافات متصفح ذكية</div>
-    <h1>إضافات <span>مجانية</span> تبسّط شغلك</h1>
-    <p>أدوات وإضافات متصفح مصممة لتسهيل عملك اليومي. مجانية بالكامل وبدون إعلانات.</p>
-    <div class="buttons">
-        <a href="#extensions" class="btn btn-primary">🚀 شاهد الإضافات</a>
-        <a href="privacy.html" class="btn btn-outline">📜 سياسة الخصوصية</a>
+    <div class="hero-badge">
+        <span class="dot"></span>
+        متاح الآن على Chrome Web Store
     </div>
-</section>
 
-<section id="extensions">
-    <div class="section-title">
-        <h2>إضافاتنا</h2>
-        <p>اضغط على زر التثبيت للحصول على الإضافة من متجر Chrome</p>
+    <h1>فواتيرك الإلكترونية<br><span class="gradient">بنقرة واحدة</span></h1>
+
+    <p>إضافة MYA PDF تحفظ فواتير هيئة الزكاء والضريبة المصرية PDF، تصدرها Excel، وتدير كل فواتيرك من مكان واحد.</p>
+
+    <div class="hero-buttons">
+        <a href="https://chrome.google.com/webstore/detail/eta-pdf-mya/hljbkmmbhgijcknkipdbgmejdflakc" target="_blank" class="btn btn-glow">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            تثبيت من Chrome
+        </a>
+        <a href="#features" class="btn btn-ghost">
+            اكتشف المزيد ↓
+        </a>
     </div>
-    <div class="extensions-grid">
 
-        <div class="extension-card">
-            <div class="ext-header">
-                <div class="ext-icon">📄</div>
-                <div class="ext-info">
-                    <h3>MYA PDF</h3>
-                    <span class="version">v2.0</span>
+    <!-- MOCK UI -->
+    <div class="hero-mockup">
+        <div class="mockup-window">
+            <div class="mockup-titlebar">
+                <div class="mockup-dot red"></div>
+                <div class="mockup-dot yellow"></div>
+                <div class="mockup-dot green"></div>
+                <div class="mockup-url">invoicing.eta.gov.eg</div>
+            </div>
+            <div class="mockup-body">
+                <div class="mock-card">
+                    <div class="mock-card-icon purple">📄</div>
+                    <h4>حفظ PDF</h4>
+                    <p>حفظ فواتيرك بنسخة واحدة</p>
+                    <div class="mock-stat purple">+500</div>
+                </div>
+                <div class="mock-card">
+                    <div class="mock-card-icon cyan">📊</div>
+                    <h4>تصدير Excel</h4>
+                    <p>تصدير البيانات لملف Excel</p>
+                    <div class="mock-stat cyan">فوري</div>
+                </div>
+                <div class="mock-card">
+                    <div class="mock-card-icon green">💰</div>
+                    <h4>VAT Returns</h4>
+                    <p>إقران الضرائب الشهرية</p>
+                    <div class="mock-stat green">100%</div>
                 </div>
             </div>
-            <p class="ext-desc">
-                إضافة رسمية لحفظ الفواتير الإلكترونية بنقرة واحدة، تصدير Excel، وإدارة الفواتير.
-                تعمل مع منصة هيئة الزكاء والضريبة المصرية (ETA).
-            </p>
-            <ul class="ext-features">
-                <li>حفظ الفواتير PDF بنقرة واحدة</li>
-                <li>تصدير البيانات لـ Excel</li>
-                <li>إقران الضرائب الشهرية (VAT)</li>
-                <li>إدارة وتصنيف الفواتير</li>
-                <li>دعم كامل لموقع ETA</li>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+    <div class="section-header fade-in">
+        <span class="tag">المميزات</span>
+        <h2>كل اللي محتاجه في مكان واحد</h2>
+        <p>أدوات قوية ت节省 وقتك وجهدك في إدارة فواتيرك الإلكترونية</p>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card fade-in">
+            <div class="feature-icon fi-1">⚡</div>
+            <h3>سرعة فائقة</h3>
+            <p>حفظ الفواتير PDF في ثانية واحدة بدون أي تأخير أو تعقيد.</p>
+        </div>
+        <div class="feature-card fade-in">
+            <div class="feature-icon fi-2">📊</div>
+            <h3>تصدير Excel</h3>
+            <p>حوّل بيانات فواتيرك لملف Excel جاهز للطباعة أو الإرسال.</p>
+        </div>
+        <div class="feature-card fade-in">
+            <div class="feature-icon fi-3">💰</div>
+            <h3>إقران VAT</h3>
+            <p>إعداد إقران الضرائب الشهرية تلقائياً بأكثر من سرعة.</p>
+        </div>
+        <div class="feature-card fade-in">
+            <div class="feature-icon fi-4">🔒</div>
+            <h3>خصوصية تامة</h3>
+            <p>لا نجمع أي بيانات. كل شيء يفضل على جهازك.</p>
+        </div>
+        <div class="feature-card fade-in">
+            <div class="feature-icon fi-5">🎯</div>
+            <h3>دعم ETA</h3>
+            <p>تعمل بشكل مباشر مع موقع هيئة الزكاء والضريبة المصرية.</p>
+        </div>
+        <div class="feature-card fade-in">
+            <div class="feature-icon fi-6">🆓</div>
+            <h3>مجاني بالكامل</h3>
+            <p>بلا إعلانات، بلا اشتراكات، بلا شراء داخل التطبيق.</p>
+        </div>
+    </div>
+</section>
+
+<!-- EXTENSION SHOWCASE -->
+<section class="showcase-section" id="extension">
+    <div class="showcase-card fade-in">
+        <div class="showcase-info">
+            <div class="ext-badge">🟢 متاح الآن</div>
+            <h3>MYA PDF v2.0</h3>
+            <p class="desc">الإضافة الرسمية لحفظ وإدارة الفواتير الإلكترونية من موقع ETA. صُممت خصيصاً للمحاسبين وأصحاب الأعمال في مصر.</p>
+            <ul class="showcase-features">
+                <li><span class="check">✓</span> حفظ فواتير PDF بنقرة واحدة</li>
+                <li><span class="check">✓</span> تصدير البيانات لـ Excel</li>
+                <li><span class="check">✓</span> إقران الضرائب الشهرية (VAT)</li>
+                <li><span class="check">✓</span> إدارة وتصنيف الفواتير</li>
+                <li><span class="check">✓</span> دعم كامل لموقع ETA</li>
+                <li><span class="check">✓</span> مجاني بالكامل</li>
             </ul>
-            <div class="ext-footer">
-                <span class="ext-status status-free">مجاني</span>
-                <a href="https://chrome.google.com/webstore/detail/eta-pdf-mya/hljbkmmbhgijcknkipdbgmejdflakc" target="_blank" class="btn-store">
-                    ⬇ تثبيت من Chrome
-                </a>
+            <a href="https://chrome.google.com/webstore/detail/eta-pdf-mya/hljbkmmbhgijcknkipdbgmejdflakc" target="_blank" class="showcase-btn">
+                تثبيت من Chrome Web Store →
+            </a>
+        </div>
+        <div class="showcase-preview">
+            <div class="preview-content">
+                <div class="preview-icon">📄</div>
+                <div class="preview-text">MYA PDF</div>
+                <div class="preview-sub">إضافة متصفح Chrome</div>
+                <div class="preview-stats">
+                    <div class="preview-stat">
+                        <div class="num">v2.0</div>
+                        <div class="label">الإصدار</div>
+                    </div>
+                    <div class="preview-stat">
+                        <div class="num">4.8★</div>
+                        <div class="label">التقييم</div>
+                    </div>
+                    <div class="preview-stat">
+                        <div class="num">+1K</div>
+                        <div class="label">مستخدم</div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 </section>
 
-<section id="features">
-    <div class="section-title">
-        <h2>لماذا تختارنا؟</h2>
-        <p>مميزات تجعل تجربتك مع إضافاتنا مميزة</p>
-    </div>
-    <div class="features">
-        <div class="feature-card">
-            <div class="icon icon-1">⚡</div>
-            <h3>سرعة فائقة</h3>
-            <p>إضافات محسّنة لأقصى أداء وتجربة مستخدم سلسة بدون تأخير.</p>
+<!-- STATS -->
+<section class="stats-section">
+    <div class="stats-grid fade-in">
+        <div class="stat-card">
+            <div class="num">+1K</div>
+            <div class="label">مستخدم نشط</div>
         </div>
-        <div class="feature-card">
-            <div class="icon icon-2">🎨</div>
-            <h3>تصميم عصري</h3>
-            <p>واجهة أنيقة وسهلة الاستخدام تناسب جميع المستخدمين.</p>
+        <div class="stat-card">
+            <div class="num">4.8</div>
+            <div class="label">تقييم المتجر</div>
         </div>
-        <div class="feature-card">
-            <div class="icon icon-3">🔒</div>
-            <h3>خصوصية تامة</h3>
-            <p>لا نجمع أي بيانات شخصية. بياناتك تبقى على جهازك.</p>
+        <div class="stat-card">
+            <div class="num">100%</div>
+            <div class="label">مجاني</div>
         </div>
-        <div class="feature-card">
-            <div class="icon icon-4">🆓</div>
-            <h3>مجاني بالكامل</h3>
-            <p>جميع إضافاتنا مجانية بدون إعلانات أو شراء داخل التطبيق.</p>
+        <div class="stat-card">
+            <div class="num">24/7</div>
+            <div class="label">دعم فني</div>
         </div>
     </div>
 </section>
 
-<section>
-    <div class="section-title">
-        <h2>إحصائيات</h2>
+<!-- SCREENSHOTS GALLERY -->
+<section class="gallery-section" id="screenshots">
+    <div class="section-header fade-in">
+        <span class="tag">لقطات شاشة</span>
+        <h2>شكل الإضافة في العمل</h2>
+        <p>شاهد كيف تبدو الإضافة وكيف تساعدك في إدارة فواتيرك</p>
     </div>
-    <div class="stats">
-        <div class="stat">
-            <h2>+1K</h2>
-            <p>مستخدم نشط</p>
+    <div class="gallery-grid fade-in">
+        <div class="gallery-item" onclick="openLightbox(0)">
+            <img src="screenshot1.jpg" alt="لقطة شاشة 1 - لوحة التحكم" loading="lazy">
+            <div class="gallery-overlay">
+                <span>لوحة التحكم</span>
+                <span class="view-btn">عرض</span>
+            </div>
         </div>
-        <div class="stat">
-            <h2>4.8</h2>
-            <p>تقييم المتجر</p>
+        <div class="gallery-item" onclick="openLightbox(1)">
+            <img src="screenshot2.jpg" alt="لقطة شاشة 2 - إدارة الفواتير" loading="lazy">
+            <div class="gallery-overlay">
+                <span>إدارة الفواتير</span>
+                <span class="view-btn">عرض</span>
+            </div>
         </div>
-        <div class="stat">
-            <h2>100%</h2>
-            <p>مجاني</p>
+        <div class="gallery-item" onclick="openLightbox(2)">
+            <img src="screenshot3.jpg" alt="لقطة شاشة 3 - تصدير البيانات" loading="lazy">
+            <div class="gallery-overlay">
+                <span>تصدير البيانات</span>
+                <span class="view-btn">عرض</span>
+            </div>
         </div>
-        <div class="stat">
-            <h2>24/7</h2>
-            <p>دعم فني</p>
+        <div class="gallery-item" onclick="openLightbox(3)">
+            <img src="screenshot4.jpg" alt="لقطة شاشة 4 - إعدادات الإضافة" loading="lazy">
+            <div class="gallery-overlay">
+                <span>إعدادات الإضافة</span>
+                <span class="view-btn">عرض</span>
+            </div>
         </div>
     </div>
 </section>
 
-<div class="container">
-    <div class="legal-section">
-        <h2>📋 ملاحظات قانونية سريعة</h2>
-        <p>باستخدامك لإضافاتنا، أنت توافق على:</p>
-        <ul>
-            <li><a href="privacy.html" style="color:#6c5ce7">سياسة الخصوصية</a> - كيف نتعامل مع بياناتك</li>
-            <li><a href="terms.html" style="color:#6c5ce7">شروط الاستخدام</a> - القواعد والشروط</li>
-            <li><a href="copyright.html" style="color:#6c5ce7">حقوق الملكية</a> - حماية المحتوى والملكية الفكرية</li>
-        </ul>
-    </div>
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#10095;</button>
+    <img id="lightbox-img" src="" alt="لقطة شاشة">
+    <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#10094;</button>
+    <div class="lightbox-counter" id="lightbox-counter"></div>
 </div>
 
-<footer id="contact">
-    <div class="footer-links">
-        <a href="index.html">الرئيسية</a>
-        <a href="privacy.html">سياسة الخصوصية</a>
-        <a href="terms.html">شروط الاستخدام</a>
-        <a href="copyright.html">حقوق الملكية</a>
+<!-- LEGAL -->
+<section class="legal-section">
+    <div class="section-header fade-in">
+        <span class="tag">قانوني</span>
+        <h2>سياسات وشروط</h2>
     </div>
-    <p>تواصل معنا: <a href="mailto:support@mya-extensions.com">support@mya-extensions.com</a></p>
-    <p style="margin-top:12px">© 2024-2026 MYA. جميع الحقوق محفوظة.</p>
+    <div class="legal-grid fade-in">
+        <a href="privacy.html" class="legal-card">
+            <div class="lc-icon">🛡️</div>
+            <h4>سياسة الخصوصية</h4>
+            <p>كيف نحمي بياناتك ونحترم خصوصيتك.</p>
+        </a>
+        <a href="terms.html" class="legal-card">
+            <div class="lc-icon">📋</div>
+            <h4>شروط الاستخدام</h4>
+            <p>القواعد والشروط لاستخدام إضافاتنا.</p>
+        </a>
+        <a href="copyright.html" class="legal-card">
+            <div class="lc-icon">©️</div>
+            <h4>حقوق الملكية</h4>
+            <p>حماية المحتوى والملكية الفكرية.</p>
+        </a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <img src="logo128.png" alt="MYA">
+            <span>MYA</span>
+        </div>
+        <ul class="footer-links">
+            <li><a href="privacy.html">الخصوصية</a></li>
+            <li><a href="terms.html">الشروط</a></li>
+            <li><a href="copyright.html">الحقوق</a></li>
+            <li><a href="mailto:maikle1121@gmail.com">تواصل معنا</a></li>
+        </ul>
+    </div>
+    <div class="footer-bottom">
+        © 2024-2026 MYA. جميع الحقوق محفوظة.
+    </div>
 </footer>
+
+<!-- SCROLL ANIMATION -->
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Lightbox
+    const images = ['screenshot1.jpg', 'screenshot2.jpg', 'screenshot3.jpg', 'screenshot4.jpg'];
+    let currentIndex = 0;
+
+    function openLightbox(index) {
+        currentIndex = index;
+        updateLightbox();
+        document.getElementById('lightbox').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function navigateLightbox(dir) {
+        currentIndex = (currentIndex + dir + images.length) % images.length;
+        updateLightbox();
+    }
+
+    function updateLightbox() {
+        document.getElementById('lightbox-img').src = images[currentIndex];
+        document.getElementById('lightbox-counter').textContent = (currentIndex + 1) + ' / ' + images.length;
+    }
+
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+        if (e.target === this) closeLightbox();
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (!document.getElementById('lightbox').classList.contains('active')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') navigateLightbox(1);
+        if (e.key === 'ArrowLeft') navigateLightbox(-1);
+    });
+</script>
 
 </body>
 </html>
