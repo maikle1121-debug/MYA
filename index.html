@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحتي</title>
+    <title>MYA - إضافات ومميزات</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -12,8 +12,11 @@
             --primary-dark: #5a4bd1;
             --dark: #0a0a1a;
             --card: #12122a;
+            --card-hover: #1a1a3e;
             --text: #e0e0e0;
             --muted: #888;
+            --success: #00b894;
+            --danger: #fd79a8;
         }
 
         body {
@@ -22,18 +25,20 @@
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
+            line-height: 1.7;
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
+            padding: 15px 5%;
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 100;
             border-bottom: 1px solid rgba(108,92,231,0.1);
+            background: rgba(10,10,26,0.8);
         }
 
         .logo {
@@ -44,7 +49,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links { display: flex; gap: 25px; list-style: none; }
         .nav-links a {
             color: var(--muted);
             text-decoration: none;
@@ -52,10 +57,13 @@
             font-size: 0.95rem;
         }
         .nav-links a:hover { color: #fff; }
+        .nav-links a.active { color: #6c5ce7; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
 
         .hero {
             text-align: center;
-            padding: 100px 5% 80px;
+            padding: 80px 5% 60px;
             position: relative;
         }
 
@@ -83,9 +91,9 @@
         }
 
         h1 {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 800;
-            line-height: 1.2;
+            line-height: 1.3;
             margin-bottom: 20px;
         }
 
@@ -98,7 +106,7 @@
         .hero p {
             font-size: 1.15rem;
             color: var(--muted);
-            max-width: 550px;
+            max-width: 600px;
             margin: 0 auto 40px;
             line-height: 1.8;
         }
@@ -106,14 +114,17 @@
         .buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
         .btn {
-            padding: 14px 32px;
-            border-radius: 12px;
-            font-size: 1rem;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
             transition: 0.3s;
             border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-primary {
@@ -132,20 +143,137 @@
 
         .btn-outline:hover { border-color: #6c5ce7; background: rgba(108,92,231,0.1); }
 
+        .btn-store {
+            background: #fff;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .btn-store:hover { background: #e0e0e0; }
+
+        section { padding: 60px 0; }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .section-title p { color: var(--muted); }
+
+        .extensions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        .extension-card {
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .extension-card:hover {
+            border-color: rgba(108,92,231,0.3);
+            transform: translateY(-4px);
+        }
+
+        .ext-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .ext-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            background: rgba(108,92,231,0.15);
+            flex-shrink: 0;
+        }
+
+        .ext-info h3 { font-size: 1.1rem; margin-bottom: 4px; }
+        .ext-info .version { color: var(--muted); font-size: 0.85rem; }
+
+        .ext-desc {
+            color: var(--muted);
+            font-size: 0.92rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .ext-features {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .ext-features li {
+            padding: 6px 0;
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+
+        .ext-features li::before {
+            content: '✓ ';
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .ext-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .ext-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-free { background: rgba(0,184,148,0.15); color: #00b894; }
+        .status-new { background: rgba(108,92,231,0.15); color: #a29bfe; }
+
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 24px;
-            padding: 0 5% 100px;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 5%;
         }
 
         .feature-card {
             background: var(--card);
             border: 1px solid rgba(255,255,255,0.05);
             border-radius: 16px;
-            padding: 36px 28px;
+            padding: 30px 24px;
             transition: 0.3s;
         }
 
@@ -155,35 +283,35 @@
         }
 
         .icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            width: 46px;
+            height: 46px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
+            font-size: 1.3rem;
+            margin-bottom: 16px;
         }
 
         .icon-1 { background: rgba(108,92,231,0.15); }
         .icon-2 { background: rgba(253,121,168,0.15); }
         .icon-3 { background: rgba(0,206,201,0.15); }
+        .icon-4 { background: rgba(253,203,110,0.15); }
 
-        .feature-card h3 { font-size: 1.15rem; margin-bottom: 12px; }
-        .feature-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
+        .feature-card h3 { font-size: 1.1rem; margin-bottom: 10px; }
+        .feature-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
 
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 30px;
-            padding: 80px 5%;
             max-width: 1000px;
             margin: 0 auto;
             text-align: center;
         }
 
         .stat h2 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
             background: linear-gradient(135deg, #6c5ce7, #a29bfe);
             -webkit-background-clip: text;
@@ -192,79 +320,200 @@
 
         .stat p { color: var(--muted); margin-top: 8px; }
 
-        footer {
+        .legal-section {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .legal-section h2 {
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+        }
+
+        .legal-section p, .legal-section li {
+            color: var(--muted);
+            font-size: 0.92rem;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .legal-section ul {
+            padding-right: 20px;
+        }
+
+        .footer {
             text-align: center;
             padding: 40px 5%;
             border-top: 1px solid rgba(255,255,255,0.05);
             color: var(--muted);
-            font-size: 0.9rem;
+            font-size: 0.88rem;
         }
 
-        footer a { color: #6c5ce7; text-decoration: none; }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover { color: #6c5ce7; }
+
+        .footer a { color: #6c5ce7; text-decoration: none; }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2.2rem; }
+            h1 { font-size: 2rem; }
             .nav-links { display: none; }
+            .extensions-grid { grid-template-columns: 1fr; }
+            .legal-section { padding: 24px; }
         }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="logo">موقعي</div>
+    <div class="logo">MYA</div>
     <ul class="nav-links">
+        <li><a href="index.html" class="active">الرئيسية</a></li>
+        <li><a href="#extensions">الإضافات</a></li>
         <li><a href="#features">المميزات</a></li>
-        <li><a href="#stats">الإحصائيات</a></li>
+        <li><a href="privacy.html">الخصوصية</a></li>
+        <li><a href="terms.html">الشروط</a></li>
+        <li><a href="copyright.html">الحقوق</a></li>
         <li><a href="#contact">تواصل معنا</a></li>
     </ul>
 </nav>
 
 <section class="hero">
-    <div class="badge">🚀 ابدأ الآن مجاناً</div>
-    <h1>ابنِ مستقبلك <span>ببساطة</span></h1>
-    <p>منصة ذكية تساعدك على بناء وإدارة أعمالك بسهولة. ابدأ رحلتك معنا اليوم.</p>
+    <div class="badge">🧩 إضافات متصفح ذكية</div>
+    <h1>إضافات <span>مجانية</span> تبسّط شغلك</h1>
+    <p>أدوات وإضافات متصفح مصممة لتسهيل عملك اليومي. مجانية بالكامل وبدون إعلانات.</p>
     <div class="buttons">
-        <a href="#" class="btn btn-primary">ابدأ مجاناً</a>
-        <a href="#features" class="btn btn-outline">اكتشف المزيد</a>
+        <a href="#extensions" class="btn btn-primary">🚀 شاهد الإضافات</a>
+        <a href="privacy.html" class="btn btn-outline">📜 سياسة الخصوصية</a>
     </div>
 </section>
 
-<section class="features" id="features">
-    <div class="feature-card">
-        <div class="icon icon-1">⚡</div>
-        <h3>سرعة فائقة</h3>
-        <p>منصة محسّنة لأقصى أداء وتجربة مستخدم سلسة بدون تأخير.</p>
+<section id="extensions">
+    <div class="section-title">
+        <h2>إضافاتنا</h2>
+        <p>اضغط على زر التثبيت للحصول على الإضافة من متجر Chrome</p>
     </div>
-    <div class="feature-card">
-        <div class="icon icon-2">🎨</div>
-        <h3>تصميم عصري</h3>
-        <p>واجهة أنيقة وسهلة الاستخدام تناسب جميع الأجهزة.</p>
-    </div>
-    <div class="feature-card">
-        <div class="icon icon-3">🔒</div>
-        <h3>حماية متقدمة</h3>
-        <p>تشفير كامل لبياناتك مع حماية على مدار الساعة.</p>
+    <div class="extensions-grid">
+
+        <div class="extension-card">
+            <div class="ext-header">
+                <div class="ext-icon">📄</div>
+                <div class="ext-info">
+                    <h3>MYA PDF</h3>
+                    <span class="version">v2.0</span>
+                </div>
+            </div>
+            <p class="ext-desc">
+                إضافة رسمية لحفظ الفواتير الإلكترونية بنقرة واحدة، تصدير Excel، وإدارة الفواتير.
+                تعمل مع منصة هيئة الزكاء والضريبة المصرية (ETA).
+            </p>
+            <ul class="ext-features">
+                <li>حفظ الفواتير PDF بنقرة واحدة</li>
+                <li>تصدير البيانات لـ Excel</li>
+                <li>إقران الضرائب الشهرية (VAT)</li>
+                <li>إدارة وتصنيف الفواتير</li>
+                <li>دعم كامل لموقع ETA</li>
+            </ul>
+            <div class="ext-footer">
+                <span class="ext-status status-free">مجاني</span>
+                <a href="https://chrome.google.com/webstore/detail/eta-pdf-mya/hljbkmmbhgijcknkipdbgmejdflakc" target="_blank" class="btn-store">
+                    ⬇ تثبيت من Chrome
+                </a>
+            </div>
+        </div>
+
     </div>
 </section>
 
-<section class="stats" id="stats">
-    <div class="stat">
-        <h2>+10K</h2>
-        <p>مستخدم نشط</p>
+<section id="features">
+    <div class="section-title">
+        <h2>لماذا تختارنا؟</h2>
+        <p>مميزات تجعل تجربتك مع إضافاتنا مميزة</p>
     </div>
-    <div class="stat">
-        <h2>99.9%</h2>
-        <p>وقت التشغيل</p>
-    </div>
-    <div class="stat">
-        <h2>24/7</h2>
-        <p>دعم فني</p>
+    <div class="features">
+        <div class="feature-card">
+            <div class="icon icon-1">⚡</div>
+            <h3>سرعة فائقة</h3>
+            <p>إضافات محسّنة لأقصى أداء وتجربة مستخدم سلسة بدون تأخير.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon icon-2">🎨</div>
+            <h3>تصميم عصري</h3>
+            <p>واجهة أنيقة وسهلة الاستخدام تناسب جميع المستخدمين.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon icon-3">🔒</div>
+            <h3>خصوصية تامة</h3>
+            <p>لا نجمع أي بيانات شخصية. بياناتك تبقى على جهازك.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon icon-4">🆓</div>
+            <h3>مجاني بالكامل</h3>
+            <p>جميع إضافاتنا مجانية بدون إعلانات أو شراء داخل التطبيق.</p>
+        </div>
     </div>
 </section>
+
+<section>
+    <div class="section-title">
+        <h2>إحصائيات</h2>
+    </div>
+    <div class="stats">
+        <div class="stat">
+            <h2>+1K</h2>
+            <p>مستخدم نشط</p>
+        </div>
+        <div class="stat">
+            <h2>4.8</h2>
+            <p>تقييم المتجر</p>
+        </div>
+        <div class="stat">
+            <h2>100%</h2>
+            <p>مجاني</p>
+        </div>
+        <div class="stat">
+            <h2>24/7</h2>
+            <p>دعم فني</p>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="legal-section">
+        <h2>📋 ملاحظات قانونية سريعة</h2>
+        <p>باستخدامك لإضافاتنا، أنت توافق على:</p>
+        <ul>
+            <li><a href="privacy.html" style="color:#6c5ce7">سياسة الخصوصية</a> - كيف نتعامل مع بياناتك</li>
+            <li><a href="terms.html" style="color:#6c5ce7">شروط الاستخدام</a> - القواعد والشروط</li>
+            <li><a href="copyright.html" style="color:#6c5ce7">حقوق الملكية</a> - حماية المحتوى والملكية الفكرية</li>
+        </ul>
+    </div>
+</div>
 
 <footer id="contact">
-    <p>تواصل معنا: <a href="mailto:info@example.com">info@example.com</a></p>
-    <p style="margin-top:8px">© 2026 جميع الحقوق محفوظة</p>
+    <div class="footer-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="privacy.html">سياسة الخصوصية</a>
+        <a href="terms.html">شروط الاستخدام</a>
+        <a href="copyright.html">حقوق الملكية</a>
+    </div>
+    <p>تواصل معنا: <a href="mailto:support@mya-extensions.com">support@mya-extensions.com</a></p>
+    <p style="margin-top:12px">© 2024-2026 MYA. جميع الحقوق محفوظة.</p>
 </footer>
 
 </body>

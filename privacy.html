@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سياسة الخصوصية - MYA</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #6c5ce7;
+            --dark: #0a0a1a;
+            --card: #12122a;
+            --text: #e0e0e0;
+            --muted: #888;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(108,92,231,0.1);
+            background: rgba(10,10,26,0.9);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links { display: flex; gap: 20px; list-style: none; }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 0.92rem;
+        }
+        .nav-links a:hover { color: #fff; }
+        .nav-links a.active { color: #6c5ce7; }
+
+        .container { max-width: 850px; margin: 0 auto; padding: 60px 5%; }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+
+        .date {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            margin: 36px 0 16px;
+            color: #a29bfe;
+        }
+
+        p, li {
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-bottom: 14px;
+        }
+
+        ul {
+            padding-right: 24px;
+            margin-bottom: 16px;
+        }
+
+        li { margin-bottom: 8px; }
+
+        a { color: var(--primary); text-decoration: none; }
+
+        .highlight {
+            background: rgba(108,92,231,0.1);
+            border-right: 3px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 0 10px 10px 0;
+            margin: 20px 0;
+        }
+
+        .highlight p { color: #bbb; margin: 0; }
+
+        footer {
+            text-align: center;
+            padding: 40px 5%;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        footer a { color: #6c5ce7; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.7rem; }
+            .nav-links { display: none; }
+            .container { padding: 40px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="logo">MYA</a>
+    <ul class="nav-links">
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="privacy.html" class="active">الخصوصية</a></li>
+        <li><a href="terms.html">الشروط</a></li>
+        <li><a href="copyright.html">الحقوق</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h1>📜 سياسة الخصوصية</h1>
+    <p class="date">آخر تحديث: يوليو 2026</p>
+
+    <div class="highlight">
+        <p><strong>ملخص سريع:</strong> إضافاتنا لا تجمع أي بيانات شخصية. جميع بياناتك تبقى على جهازك局部ally ولن تُرسل لأي خادم خارجي.</p>
+    </div>
+
+    <h2>1. مقدمة</h2>
+    <p>مرحباً بك في صفحة سياسة الخصوصية الخاصة بإضافات MYA. نحن نلتزم بحماية خصوصيتك وبياناتك الشخصية. تشرح لك هذه السياسة كيف نتعامل مع أي معلومات عند استخدامك لإضافاتنا على متصفح Google Chrome.</p>
+
+    <h2>2. المعلومات التي نجمعها</h2>
+    <p><strong>نحن لا نجمع أي بيانات شخصية تعريفية.</strong></p>
+    <p>إضافاتنا تعمل بشكل كامل على جهازك المحلي (client-side) ولا ترسل أي معلومات لخوادمنا أو لأي طرف ثالث.</p>
+
+    <h3>البيانات التي تتم معالجتها محلياً:</h3>
+    <ul>
+        <li>معلومات الفواتير التي تقوم بإدخالها يدوياً (لموقع ETA فقط)</li>
+        <li>بيانات التخزين المحلي للمتصفح (localStorage)</li>
+        <li>إعدادات الإضافة والتفضيلات</li>
+    </ul>
+
+    <h2>3. كيف نستخدم البيانات</h2>
+    <ul>
+        <li><strong>لتقديم الخدمة:</strong> معالجة الفواتير وتصديرها محلياً على جهازك</li>
+        <li><strong>لتحسين التجربة:</strong> حفظ إعداداتك وتفضيلاتك محلياً</li>
+        <li><strong>للتخزين المحلي:</strong> حفظ بيانات الفواتير في متصفحك فقط</li>
+    </ul>
+
+    <h2>4. مشاركة البيانات</h2>
+    <div class="highlight">
+        <p><strong>لا نشارك أي بيانات مع أطراف ثالثة.</strong> لا نبيع بياناتك ولا نتاجر بها.</p>
+    </div>
+    <p>لا نقوم بمشاركة أو بيع أو نقل أي بيانات لأي طرف ثالث. جميع العمليات تتم محلياً على جهازك.</p>
+
+    <h2>5. تخزين البيانات وأمانها</h2>
+    <ul>
+        <li>جميع البيانات تُخزّن محلياً في متصفح Chrome باستخدام localStorage</li>
+        <li>لا توجد خوادم خارجية تتخزّن فيها بياناتك</li>
+        <li>يمكنك حذف جميع البيانات في أي وقت من إعدادات الإضافة</li>
+        <li>حذف الإضافة يحذف جميع البيانات المرتبطة بها</li>
+    </ul>
+
+    <h2>6. ملفات تعريف الارتباط (Cookies)</h2>
+    <p>إضافاتنا لا تستخدم أي ملفات تعريف ارتباط تعريفية. نستخدم فقط localStorage المدمج في المتصفح لحفظ إعداداتك.</p>
+
+    <h2>7. أمان البيانات</h2>
+    <p>نحن نتخذ إجراءات أمنية معقولة لحماية بياناتك:</p>
+    <ul>
+        <li>تشفير اتصالات HTTPS مع الموقع الرسمي لـ ETA</li>
+        <li>عدم إرسال أي بيانات لخوادم خارجية</li>
+        <li>الامتثال لمعايير أمان متصفح Chrome</li>
+    </ul>
+
+    <h2>8. حقوق المستخدم</h2>
+    <p>لك الحق في:</p>
+    <ul>
+        <li>معرفة أي بيانات نحتفظ بها (لا نحتفظ بأي بيانات)</li>
+        <li>حذف بياناتك في أي وقت</li>
+        <li>وقف استخدام الإضافة وحذفها</li>
+        <li>تقديم شكوى إذا اعتقدت أن خصوصيتك انتهكت</li>
+    </ul>
+
+    <h2>9. الخصوصية للأطفال</h2>
+    <p>إضافاتنا ليست موجهة للأطفال تحت سن 13 عاماً. لا نجمع أي بيانات عن الأطفال عمدياً.</p>
+
+    <h2>10. التغييرات على سياسة الخصوصية</h2>
+    <p>قد نقوم بتحديث هذه السياسة من وقت لآخر. سيتم نشر أي تغييرات على هذه الصفحة مع تحديث تاريخ "آخر تحديث". ننصح بمراجعة هذه السياسة دورياً.</p>
+
+    <h2>11. الاتصال بنا</h2>
+    <p>إذا كانت لديك أي أسئلة أو استفسارات حول سياسة الخصوصية هذه، يرجى التواصل معنا عبر:</p>
+    <ul>
+        <li>البريد الإلكتروني: <a href="mailto:privacy@mya-extensions.com">privacy@mya-extensions.com</a></li>
+    </ul>
+
+    <h2>12. القبول</h2>
+    <p>باستخدامك لإضافاتنا، أنت توافق على شروط سياسة الخصوصية هذه. إذا كنت لا توافق على أي جزء من هذه السياسة، يرجى عدم استخدام الإضافة.</p>
+</div>
+
+<footer>
+    <p>© 2024-2026 MYA. جميع الحقوق محفوظة.</p>
+    <p style="margin-top:8px">
+        <a href="index.html">الرئيسية</a> · 
+        <a href="privacy.html">الخصوصية</a> · 
+        <a href="terms.html">الشروط</a> · 
+        <a href="copyright.html">الحقوق</a>
+    </p>
+</footer>
+
+</body>
+</html>
