@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحتي</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5a4bd1;
+            --dark: #0a0a1a;
+            --card: #12122a;
+            --text: #e0e0e0;
+            --muted: #888;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(108,92,231,0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 0.95rem;
+        }
+        .nav-links a:hover { color: #fff; }
+
+        .hero {
+            text-align: center;
+            padding: 100px 5% 80px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(108,92,231,0.15), transparent 70%);
+            pointer-events: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(108,92,231,0.15);
+            border: 1px solid rgba(108,92,231,0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: #a29bfe;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        h1 span {
+            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--muted);
+            max-width: 550px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        .buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: #fff;
+            box-shadow: 0 4px 25px rgba(108,92,231,0.4);
+        }
+
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 35px rgba(108,92,231,0.5); }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .btn-outline:hover { border-color: #6c5ce7; background: rgba(108,92,231,0.1); }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            padding: 0 5% 100px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 36px 28px;
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(108,92,231,0.3);
+            transform: translateY(-4px);
+        }
+
+        .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .icon-1 { background: rgba(108,92,231,0.15); }
+        .icon-2 { background: rgba(253,121,168,0.15); }
+        .icon-3 { background: rgba(0,206,201,0.15); }
+
+        .feature-card h3 { font-size: 1.15rem; margin-bottom: 12px; }
+        .feature-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            padding: 80px 5%;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat p { color: var(--muted); margin-top: 8px; }
+
+        footer {
+            text-align: center;
+            padding: 40px 5%;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        footer a { color: #6c5ce7; text-decoration: none; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">موقعي</div>
+    <ul class="nav-links">
+        <li><a href="#features">المميزات</a></li>
+        <li><a href="#stats">الإحصائيات</a></li>
+        <li><a href="#contact">تواصل معنا</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <div class="badge">🚀 ابدأ الآن مجاناً</div>
+    <h1>ابنِ مستقبلك <span>ببساطة</span></h1>
+    <p>منصة ذكية تساعدك على بناء وإدارة أعمالك بسهولة. ابدأ رحلتك معنا اليوم.</p>
+    <div class="buttons">
+        <a href="#" class="btn btn-primary">ابدأ مجاناً</a>
+        <a href="#features" class="btn btn-outline">اكتشف المزيد</a>
+    </div>
+</section>
+
+<section class="features" id="features">
+    <div class="feature-card">
+        <div class="icon icon-1">⚡</div>
+        <h3>سرعة فائقة</h3>
+        <p>منصة محسّنة لأقصى أداء وتجربة مستخدم سلسة بدون تأخير.</p>
+    </div>
+    <div class="feature-card">
+        <div class="icon icon-2">🎨</div>
+        <h3>تصميم عصري</h3>
+        <p>واجهة أنيقة وسهلة الاستخدام تناسب جميع الأجهزة.</p>
+    </div>
+    <div class="feature-card">
+        <div class="icon icon-3">🔒</div>
+        <h3>حماية متقدمة</h3>
+        <p>تشفير كامل لبياناتك مع حماية على مدار الساعة.</p>
+    </div>
+</section>
+
+<section class="stats" id="stats">
+    <div class="stat">
+        <h2>+10K</h2>
+        <p>مستخدم نشط</p>
+    </div>
+    <div class="stat">
+        <h2>99.9%</h2>
+        <p>وقت التشغيل</p>
+    </div>
+    <div class="stat">
+        <h2>24/7</h2>
+        <p>دعم فني</p>
+    </div>
+</section>
+
+<footer id="contact">
+    <p>تواصل معنا: <a href="mailto:info@example.com">info@example.com</a></p>
+    <p style="margin-top:8px">© 2026 جميع الحقوق محفوظة</p>
+</footer>
+
+</body>
+</html>
