@@ -383,6 +383,110 @@ body {
     opacity: 0.9;
 }
 
+/* Gallery / Screenshots Carousel */
+.gallery {
+    padding: 100px 0;
+    background: var(--bg-light);
+}
+
+.gallery .section-subtitle {
+    margin-bottom: 40px;
+}
+
+.carousel {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.carousel-viewport {
+    overflow: hidden;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    background: #fff;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.6s ease;
+}
+
+.carousel-slide {
+    flex: 0 0 100%;
+    min-width: 100%;
+    text-align: center;
+    padding: 20px;
+}
+
+.carousel-slide img {
+    max-width: 100%;
+    max-height: 500px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.carousel-slide p {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    z-index: 5;
+    transition: background 0.3s;
+}
+
+.carousel-btn:hover {
+    background: var(--primary-dark);
+}
+
+.carousel-btn.prev {
+    right: -22px;
+}
+
+.carousel-btn.next {
+    left: -22px;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border-color);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.carousel-dot.active {
+    background: var(--primary-color);
+    transform: scale(1.2);
+}
+
 /* Footer */
 .footer {
     background: #1f2937;
@@ -481,5 +585,17 @@ body {
     .stats {
         flex-direction: column;
         gap: 30px;
+    }
+    
+    .carousel-btn.prev {
+        right: 5px;
+    }
+    
+    .carousel-btn.next {
+        left: 5px;
+    }
+    
+    .carousel-slide img {
+        max-height: 300px;
     }
 }
