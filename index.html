@@ -70,7 +70,9 @@
             <ul class="nav-links">
                 <li><a href="#features">المميزات</a></li>
                 <li><a href="#how-to-use">كيفية الاستخدام</a></li>
+                <li><a href="#gallery">معرض الصور</a></li>
                 <li><a href="#faq">الأسئلة الشائعة</a></li>
+                <li><a href="privacy.html">سياسة الخصوصية</a></li>
                 <li><a href="#download" class="btn-primary">تنزيل مجاني</a></li>
             </ul>
             <button class="mobile-menu" aria-label="القائمة">☰</button>
@@ -149,6 +151,43 @@
                     <p>حفظ الفواتير في ثوانٍ معدودة. واجهة سهلة وسريعة الاستخدام.</p>
                     <span class="feature-tag">MYA PDF</span>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <h2 class="section-title">شاهد MYA PDF من الداخل</h2>
+            <p class="section-subtitle">صور حقيقية من واجهة الإضافة ولوحة التحكم</p>
+            <div class="carousel">
+                <div class="carousel-viewport">
+                    <div class="carousel-track" id="carouselTrack">
+                        <div class="carousel-slide">
+                            <img src="store-images/screenshot-1.png" alt="MYA PDF - تنزيل فواتير ضريبية بنقرة واحدة من داخل النظام" loading="lazy">
+                            <p>📥 تنزيل الفواتير الضريبية بنقرة واحدة من داخل النظام</p>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="store-images/screenshot-2.png" alt="MYA PDF - لوحة تحكم MYA PDF لإدارة الفواتير" loading="lazy">
+                            <p>📊 لوحة تحكم MYA PDF لإدارة فواتيرك</p>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="store-images/marquee-promo-1400x560.png" alt="MYA PDF - حمّل فواتيرك الضريبية بضغطة واحدة" loading="lazy">
+                            <p>⚡ حمّل فواتيرك الضريبية بضغطة واحدة</p>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="store-images/large-promo-920x680.png" alt="MYA PDF - حفظ PDF وتصدير Excel وإدارة المرتجعات" loading="lazy">
+                            <p>📄 حفظ PDF، تصدير Excel، وإدارة المرتجعات بسهولة</p>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="store-images/small-promo-440x280.png" alt="MYA PDF - إضافة الفواتير الإلكترونية المصرية" loading="lazy">
+                            <p>🔹 إضافة MYA PDF لفواتير مصر الإلكترونية</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-btn prev" aria-label="السابق">❮</button>
+                <button class="carousel-btn next" aria-label="التالي">❯</button>
+                <div class="carousel-dots" id="carouselDots"></div>
             </div>
         </div>
     </section>
@@ -339,6 +378,52 @@
             }
         ]
     }
+    </script>
+    <script>
+    (function () {
+        var track = document.getElementById('carouselTrack');
+        if (!track) return;
+        var slides = track.children.length;
+        var index = 0;
+        var dotsWrap = document.getElementById('carouselDots');
+        var dots = [];
+        var timer;
+        var viewport = document.querySelector('.carousel-viewport');
+
+        for (var i = 0; i < slides; i++) {
+            var d = document.createElement('button');
+            d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+            d.setAttribute('aria-label', 'الشريحة ' + (i + 1));
+            (function (n) {
+                d.addEventListener('click', function () { go(n); restart(); });
+            })(i);
+            dotsWrap.appendChild(d);
+            dots.push(d);
+        }
+
+        function go(n) {
+            index = (n + slides) % slides;
+            track.style.transform = 'translateX(-' + (index * 100) + '%)';
+            for (var j = 0; j < slides; j++) {
+                dots[j].classList.toggle('active', j === index);
+            }
+        }
+
+        function restart() {
+            clearInterval(timer);
+            timer = setInterval(function () { go(index + 1); }, 3500);
+        }
+
+        document.querySelector('.carousel-btn.prev').addEventListener('click', function () { go(index - 1); restart(); });
+        document.querySelector('.carousel-btn.next').addEventListener('click', function () { go(index + 1); restart(); });
+
+        if (viewport) {
+            viewport.addEventListener('mouseenter', function () { clearInterval(timer); });
+            viewport.addEventListener('mouseleave', restart);
+        }
+
+        restart();
+    })();
     </script>
 </body>
 </html>
