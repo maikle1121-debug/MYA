@@ -1,0 +1,9 @@
+# MYA PDF - مايا فواتير - robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://maikle1121-debug.github.io/MYA/sitemap.xml
+
+# SEO - تنزيل فواتير ضريبية
+# MYA PDF - تنزيل ايصالات
+# مايا فواتير
