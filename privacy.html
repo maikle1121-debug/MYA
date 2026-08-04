@@ -1,46 +1,229 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - MYA PDF</title>
-    <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
-        h1, h2 { color: #333; }
-        p { margin-bottom: 15px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سياسة الخصوصية | MYA PDF</title>
+<style>
+  :root { --primary:#1F4E78; --accent:#2196F3; --bg:#f5f7fa; --text:#1a1a2e; --border:#e0e4ea; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Segoe UI", Tahoma, Arial, sans-serif; background:var(--bg); color:var(--text); line-height:1.8; }
+  .wrap { max-width:900px; margin:0 auto; padding:24px 20px 80px; }
+  header { background:linear-gradient(135deg,#1F4E78,#2196F3); color:#fff; padding:40px 20px; text-align:center; }
+  header h1 { margin:0 0 6px; font-size:28px; }
+  header p { margin:0; opacity:.9; font-size:14px; }
+  h2 { color:var(--primary); border-bottom:2px solid var(--border); padding-bottom:8px; margin-top:38px; font-size:20px; }
+  h3 { color:var(--accent); margin-top:26px; font-size:16px; }
+  p, li { font-size:15px; }
+  ul { padding-inline-start:22px; }
+  .notice { background:#fff8e6; border:1px solid #f0d48a; border-radius:8px; padding:14px 18px; margin:18px 0; font-size:14px; }
+  .box { background:#fff; border:1px solid var(--border); border-radius:10px; padding:18px 22px; margin:16px 0; }
+  table { width:100%; border-collapse:collapse; background:#fff; font-size:14px; }
+  th, td { border:1px solid var(--border); padding:10px 12px; text-align:right; vertical-align:top; }
+  th { background:var(--primary); color:#fff; }
+  .en { direction:ltr; text-align:left; font-size:14px; color:#555; }
+  .lang { text-align:center; margin:14px 0; }
+  .lang a { color:var(--accent); margin:0 10px; text-decoration:none; font-weight:bold; }
+  .muted { color:#666; font-size:13px; }
+  code { background:#eef2f7; padding:2px 6px; border-radius:4px; font-size:13px; }
+</style>
 </head>
 <body>
-    <h1>Privacy Policy for MYA PDF</h1>
-    <p><strong>Last updated:</strong> August 3, 2026</p>
 
-    <h2>1. Introduction</h2>
-    <p>Welcome to MYA PDF. This privacy policy explains how our Chrome Extension collects, uses, and protects your information when you use our services.</p>
+<header>
+  <h1>سياسة الخصوصية — MYA PDF</h1>
+  <p>آخر تحديث: 4 أغسطس 2026</p>
+</header>
 
-    <h2>2. Data Collection and Usage</h2>
-    <p>MYA PDF is designed to assist you with eInvoices, Excel export, VAT returns, and invoice management on the Egyptian Tax Authority (ETA) portal. The extension processes data locally on your device to generate PDFs and Excel files.</p>
+<div class="wrap">
+
+  <div class="lang">
+    <a href="#ar">العربية</a> · <a href="#en">English</a>
+  </div>
+
+  <!-- ═══════════════ العربية ═══════════════ -->
+  <section id="ar">
+
+    <h2>1. مقدمة</h2>
+    <p>
+      إضافة MYA PDF (ويشار إليها فيما بعد "الإضافة") تساعدك في حفظ الفواتير الإلكترونية وتصدير ملفات Excel وPDF
+      وإعداد تقارير القيمة المضافة من بوابة مصلحة الضرائب المصرية (invoicing.eta.gov.eg).
+      تحدد هذه السياسة البيانات التي تجمعها الإضافة وكيفية استخدامها وحمايتها.
+    </p>
+
+    <div class="notice">
+      <strong>نقطة هامة وشفافية كاملة:</strong> كانت هناك نسخة سابقة من هذه الصفحة تنص على أن الإضافة
+      "لا ترسل أي بيانات إلى خوادم خارجية". هذه العبارة لم تعد دقيقة. الإضافة ترسل الحد الأدنى من البيانات
+      الضرورية (البريد الإلكتروني وعنوان IP ومعلومات الجهاز) إلى خوادم المطور للتحقق من الاشتراك وإدارة الأجهزة،
+      كما هو موضح بالتفصيل أدناه. بيانات الفواتير نفسها تبقى على جهازك ولا تُرسل لأي خادم.
+    </div>
+
+    <h2>2. البيانات التي تجمعها الإضافة</h2>
+
+    <h3>2.1 بيانات تُرسل إلى خوادم المطور</h3>
+    <p>لكي تعمل الإضافة وتتحقق من صحة اشتراكك، يتم قراءة البيانات التالية من جلسة تسجيل دخولك على بوابة الضرائب وإرسالها إلى خوادم المطور (Supabase عبر وسيط Cloudflare Pages):</p>
     <ul>
-        <li><strong>Local Processing:</strong> All data extracted from the ETA portal (such as invoice details) is processed locally on your computer.</li>
-        <li><strong>No External Servers:</strong> We do not send, transmit, or store your personal data, invoice data, or sensitive information on any external servers.</li>
-        <li><strong>No Third-Party Sharing:</strong> We do not sell, trade, or otherwise transfer your information to outside parties.</li>
+      <li><strong>البريد الإلكتروني:</strong> يُقرأ من بيانات المستخدم المحفوظة محلياً في البوابة، ويُستخدم فقط للتحقق من أن بريدك مسجل كمشترك فعّال.</li>
+      <li><strong>عنوان الـ IP العام:</strong> يُجلب من خدمة <code>api.ipify.org</code> ويُستخدم لتسجيل "الأجهزة" المرتبطة باشتراكك (لمنع إساءة الاستخدام والمشاركة غير المصرح بها للاشتراك).</li>
+      <li><strong>بيانات الجهاز (user agent):</strong> تُستخدم مع عنوان الـ IP لتسجيل الجهاز وعدد مرات الاستخدام.</li>
+      <li><strong>رسائل التحقق:</strong> استجابة من خادم المطور تحدد حالة اشتراكك (نشط / منتهي / محظور) بالإضافة إلى رسائل الإشعارات وإصدار الإضافة.</li>
+    </ul>
+    <p>تُحفظ هذه السجلات (سجلات الأجهزة) في <code>chrome.storage.local</code> على جهازك، وقد يُطلع عليها المطور من خلال لوحة التحكم الخاصة به.</p>
+
+    <h3>2.2 بيانات تُعالج محلياً فقط ولا تُرسل</h3>
+    <ul>
+      <li><strong>بيانات الفواتير والإيصالات:</strong> تُقرأ من البوابة أثناء تصفحك وتُحفظ في قاعدة بيانات محلية داخل متصفحك (IndexedDB) لتوليد ملفات PDF وExcel والتقارير. هذه البيانات لا تُرسل لأي خادم خارجي.</li>
+      <li><strong>إعداداتك وتفضيلاتك:</strong> مثل خيارات التصدير وإعدادات الواجهة، تُحفظ محلياً في المتصفح.</li>
     </ul>
 
-    <h2>3. Permissions</h2>
-    <p>The extension requires the following permissions to function correctly:</p>
+    <h3>2.3 بيانات تُرسل إلى أطراف ثالثة لأغراض وظيفية</h3>
+    <table>
+      <tr><th>الطرف الثالث</th><th>البيانات المرسلة</th><th>الغرض</th></tr>
+      <tr><td>api.qrserver.com</td><td>الرابط العام للفاتورة (يتضمن رقم الفاتورة UUID)</td><td>توليد رمز QR يظهر داخل ملفات PDF المُصدَّرة</td></tr>
+      <tr><td>cdn.jsdelivr.net</td><td>لا توجد بيانات شخصية</td><td>الحصول على أسعار العملات لأغراض عرض التقارير</td></tr>
+      <tr><td>api.ipify.org</td><td>عنوان IP العام</td><td>تسجيل الجهاز المرتبط بالاشتراك</td></tr>
+    </table>
+
+    <h2>3. الغرض من جمع البيانات</h2>
     <ul>
-        <li><strong>storage:</strong> Used to save your local settings and preferences.</li>
-        <li><strong>tabs:</strong> Used to interact with the ETA portal tabs you have open.</li>
-        <li><strong>downloads:</strong> Used to save generated PDF and Excel files directly to your device.</li>
-        <li><strong>Host Permissions (invoicing.eta.gov.eg):</strong> Required to read and process invoice data directly from the official portal.</li>
+      <li>التحقق من أن البريد الإلكتروني مسجل في قائمة المشتركين النشطين (الإضافة تعمل بنظام اشتراك مدفوع).</li>
+      <li>منع مشاركة الاشتراك أو إساءة استخدامه (تتبع عدد الأجهزة والاستخدامات لكل مشترك).</li>
+      <li>إرسال إشعارات وتحديثات وإصدارات الإضافة للمستخدمين.</li>
+      <li>حجب المستخدمين المحظورين وفقاً لشروط استخدام المطور.</li>
+    </ul>
+    <p>لا تُستخدم بياناتك لأي غرض آخر، ولا تُباع ولا تُشارك مع أي طرف لأغراض تسويقية.</p>
+
+    <h2>4. مدة الاحتفاظ بالبيانات</h2>
+    <p>تُحفظ سجلات الأجهزة (الإيميل + IP + بيانات الجهاز) طالما كان الاشتراك قائماً، ويتم حذفها عند انتهاء الاشتراك أو عند طلبك حذفها. السجلات المحلية داخل متصفحك يمكنك مسحها من أي وقت عبر مسح بيانات المتصفح الخاصة بالإضافة. يمكنك طلب حذف بياناتك من خوادم المطور في أي وقت عبر بيانات التواصل أدناه.</p>
+
+    <h2>5. الأمان</h2>
+    <ul>
+      <li>جميع الاتصالات تتم عبر HTTPS المشفّر.</li>
+      <li>تُرسل البيانات إلى خوادم المطور بأقل قدر ضروري (مبدأ تقليل البيانات).</li>
+      <li>بيانات الفواتير لا تغادر جهازك نهائياً.</li>
+      <li>ننصحك بحماية جهازك بكلمة مرور قوية لأن بيانات الفواتير تُحفظ محلياً.</li>
     </ul>
 
-    <h2>4. Data Security</h2>
-    <p>Because the extension operates entirely locally, the security of your data depends on the security of your own device. We implement best practices in our code to ensure that your local data remains isolated and secure within the browser environment.</p>
+    <h2>6. الأذونات ولماذا نحتاجها</h2>
+    <table>
+      <tr><th>الإذن</th><th>الغرض</th></tr>
+      <tr><td>storage</td><td>حفظ إعداداتك وسجلات الأجهزة محلياً</td></tr>
+      <tr><td>tabs</td><td>التفاعل مع تبويبات بوابة الضرائب</td></tr>
+      <tr><td>downloads</td><td>حفظ ملفات PDF وExcel على جهازك</td></tr>
+      <tr><td>alarms</td><td>تنبيهات دورية لفحص حالة الاشتراك والإعدادات</td></tr>
+      <tr><td>host permissions (بوابة الضرائب)</td><td>قراءة بيانات الفواتير من البوابة الرسمية</td></tr>
+    </table>
 
-    <h2>5. Changes to This Privacy Policy</h2>
-    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by updating the "Last updated" date of this Privacy Policy.</p>
+    <h2>7. الإفصاح عن نظام الاشتراك (Monetization Disclosure)</h2>
+    <p>
+      الإضافة تعمل بنظام <strong>اشتراك مدفوع</strong>. المزايا الرئيسية (تصدير PDF / Excel، التقارير، دمج الملفات، الإحصائيات، مقارنة الفترات)
+      تتطلب اشتراكاً نشطاً. يتم التحقق من صحة الاشتراك من خلال خوادم المطور كما هو موضح في هذه السياسة.
+    </p>
 
-    <h2>6. Contact Us</h2>
-    <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at the developer email provided in the Chrome Web Store.</p>
+    <h2>8. تغييرات سياسة الخصوصية</h2>
+    <p>قد نقوم بتحديث هذه السياسة من وقت لآخر. عند إجراء تغييرات جوهرية على طريقة التعامل مع البيانات، سنقوم بتحديث تاريخ "آخر تحديث" أعلاه وإخطارك من خلال الإضافة نفسها. استمرارك في استخدام الإضافة بعد التحديث يعني موافقتك على النسخة الجديدة.</p>
+
+    <h2>9. تواصل معنا</h2>
+    <p>لأي استفسار عن هذه السياسة أو لطلب حذف بياناتك: <strong>maikle1121@gmail.com</strong></p>
+
+    <p class="muted">آخر تحديث: 4 أغسطس 2026</p>
+  </section>
+
+  <hr style="margin:60px 0; border:none; border-top:2px solid var(--border);">
+
+  <!-- ═══════════════ English ═══════════════ -->
+  <section id="en">
+    <h2>Privacy Policy for MYA PDF</h2>
+    <p class="en"><strong>Last updated:</strong> August 4, 2026</p>
+
+    <h3 class="en">1. Introduction</h3>
+    <p class="en">
+      MYA PDF is a Chrome extension that helps you save e-invoices and export Excel/PDF files and VAT reports
+      from the Egyptian Tax Authority portal (invoicing.eta.gov.eg). This policy explains what data the extension
+      collects, why, and how it is handled.
+    </p>
+
+    <div class="notice en" style="direction:ltr;text-align:left;">
+      <strong>Important notice:</strong> An earlier version of this page stated the extension "sends no data to external
+      servers." That statement was inaccurate and has been corrected. The extension sends the minimum necessary data
+      (email address, public IP, and user-agent) to the developer's servers to verify your paid subscription and to
+      manage device usage. Invoice data itself never leaves your device.
+    </div>
+
+    <h3 class="en">2. Data collected</h3>
+    <p class="en"><strong>2.1 Sent to the developer's servers (Supabase via a Cloudflare Pages proxy):</strong></p>
+    <ul class="en">
+      <li><strong>Email address</strong> — read from the local session data of the tax portal; used only to verify your email is an active subscriber.</li>
+      <li><strong>Public IP address</strong> — obtained from <code>api.ipify.org</code>; used to record the devices linked to your subscription (to prevent unauthorized sharing).</li>
+      <li><strong>User-agent / device info</strong> — used together with the IP to log the device and usage count.</li>
+      <li><strong>Server responses</strong> — subscription status, notices, and extension version data fetched from the developer's servers.</li>
+    </ul>
+    <p class="en">Device logs (email, IP, user-agent, timestamps) are stored locally in <code>chrome.storage.local</code> and may be reviewed by the developer through their dashboard.</p>
+
+    <p class="en"><strong>2.2 Processed locally only (never transmitted):</strong></p>
+    <ul class="en">
+      <li><strong>Invoice/receipt data</strong> — read from the portal and stored in a local database (IndexedDB) to generate PDF/Excel files and reports.</li>
+      <li><strong>Your settings and preferences</strong> — stored locally in the browser.</li>
+    </ul>
+
+    <p class="en"><strong>2.3 Third-party services used for functional purposes:</strong></p>
+    <table class="en">
+      <tr><th>Third party</th><th>Data sent</th><th>Purpose</th></tr>
+      <tr><td>api.qrserver.com</td><td>Public invoice URL (includes the invoice UUID)</td><td>Generating the QR code shown inside exported PDF files</td></tr>
+      <tr><td>cdn.jsdelivr.net</td><td>No personal data</td><td>Fetching currency exchange rates for reports</td></tr>
+      <tr><td>api.ipify.org</td><td>Public IP address</td><td>Device logging for subscription management</td></tr>
+    </table>
+
+    <h3 class="en">3. Why we collect this data</h3>
+    <ul class="en">
+      <li>To verify that your email is an active subscriber (the extension is a paid subscription product).</li>
+      <li>To prevent subscription sharing / misuse (tracking device count and usage per subscriber).</li>
+      <li>To deliver notices, updates, and version information.</li>
+      <li>To enforce the developer's terms (e.g., blocked accounts).</li>
+    </ul>
+    <p class="en">Your data is not sold, shared, or used for marketing.</p>
+
+    <h3 class="en">4. Retention</h3>
+    <p class="en">
+      Device logs are kept while a subscription is active and are removed when it ends or upon your request.
+      Local browser data can be cleared through your browser's extension settings. To request deletion of your data
+      from the developer's servers, contact us at the address below.
+    </p>
+
+    <h3 class="en">5. Security</h3>
+    <ul class="en">
+      <li>All communications use encrypted HTTPS.</li>
+      <li>Only the minimum necessary data is transmitted (data minimization).</li>
+      <li>Invoice data never leaves your device.</li>
+      <li>Since invoice data is stored locally, keep your device protected with a strong password.</li>
+    </ul>
+
+    <h3 class="en">6. Permissions</h3>
+    <table class="en">
+      <tr><th>Permission</th><th>Purpose</th></tr>
+      <tr><td>storage</td><td>Save settings and device logs locally</td></tr>
+      <tr><td>tabs</td><td>Interact with the tax portal tabs</td></tr>
+      <tr><td>downloads</td><td>Save generated PDF/Excel files</td></tr>
+      <tr><td>alarms</td><td>Periodic subscription/status checks</td></tr>
+      <tr><td>Host permission (tax portal)</td><td>Read invoice data from the official portal</td></tr>
+    </table>
+
+    <h3 class="en">7. Monetization Disclosure</h3>
+    <p class="en">
+      MYA PDF is a <strong>paid subscription</strong> product. The main features (PDF/Excel export, reports, file merging,
+      statistics, period comparison) require an active subscription verified against the developer's servers as described above.
+    </p>
+
+    <h3 class="en">8. Changes to this policy</h3>
+    <p class="en">
+      We may update this policy from time to time. Material changes will be reflected in the "Last updated" date and
+      notified through the extension. Continued use after changes constitutes acceptance.
+    </p>
+
+    <h3 class="en">9. Contact</h3>
+    <p class="en">For questions about this policy or to request data deletion: <strong>maikle1121@gmail.com</strong></p>
+  </section>
+
+</div>
 </body>
 </html>
