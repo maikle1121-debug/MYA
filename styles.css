@@ -1276,14 +1276,6 @@ ul, ol { list-style: none; }
   font-size: 1.2rem;
 }
 .modal-box > p { color: var(--muted); font-size: .92rem; margin-bottom: 20px; }
-.wa-help-steps {
-  margin: 0 0 20px;
-  padding-right: 20px;
-  color: var(--ink-soft);
-  font-size: .9rem;
-  line-height: 2;
-}
-.wa-help-steps strong { color: var(--ink); }
 .form-field { margin-bottom: 14px; }
 .form-field label { display: block; font-size: .84rem; font-weight: 700; color: var(--ink-soft); margin-bottom: 6px; }
 .form-field input, .form-field select, .form-field textarea {

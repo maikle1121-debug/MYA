@@ -22,67 +22,7 @@
   function openWhatsApp(message) {
     var text = encodeURIComponent(message || '');
     var webUrl = 'https://wa.me/' + WHATSAPP_NUMBER + (text ? '?text=' + text : '');
-    var isMobile = /Android|iPhone|iPad|iPod|Mobile|Opera Mini|IEMobile|webOS/i.test(navigator.userAgent);
-
-    if (isMobile) {
-      window.location.href = webUrl;
-      return;
-    }
-
-    var a = document.createElement('a');
-    a.href = webUrl;
-    a.target = '_blank';
-    a.rel = 'noopener';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    showWhatsAppHelp();
-  }
-
-  function buildWhatsAppHelp() {
-    var overlay = document.createElement('div');
-    overlay.className = 'modal-overlay';
-    overlay.id = 'waHelpModal';
-    overlay.innerHTML =
-      '<div class="modal-box" style="position:relative">' +
-        '<button class="modal-close" id="waHelpClose" aria-label="إغلاق">✕</button>' +
-        '<h3><span class="ico">📱</span> افتح واتساب ويب واربط هاتفك</h3>' +
-        '<p>لو ظهر رمز QR على الشاشة، اربطه من داخل تطبيق واتساب على موبايلك:</p>' +
-        '<ol class="wa-help-steps">' +
-          '<li>تابع تبويب واتساب الذي فُتح وسيظهر رمز QR على الشاشة.</li>' +
-          '<li>من تطبيق واتساب على موبايلك: اضغط <strong>القائمة (⋮)</strong> ثم <strong>الأجهزة المرتبطة</strong>.</li>' +
-          '<li>اضغط <strong>ربط جهاز جديد</strong> وامسح رمز QR الظاهر على شاشة الكمبيوتر.</li>' +
-          '<li>بعد الربط تظهر محادثتك وتكتب رسالتك جاهزة للإرسال.</li>' +
-        '</ol>' +
-        '<button type="button" id="waHelpGo" class="modal-cta">فتح واتساب ويب</button>' +
-      '</div>';
-    document.body.appendChild(overlay);
-
-    var closeBtn = document.getElementById('waHelpClose');
-    var goBtn = document.getElementById('waHelpGo');
-    closeBtn.addEventListener('click', function () { overlay.classList.remove('open'); document.body.style.overflow = ''; });
-    overlay.addEventListener('click', function (e) {
-      if (e.target === overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
-    });
-    goBtn.addEventListener('click', function () {
-      overlay.classList.remove('open');
-      document.body.style.overflow = '';
-      var a = document.createElement('a');
-      a.href = 'https://web.whatsapp.com/';
-      a.target = '_blank';
-      a.rel = 'noopener';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    });
-  }
-
-  function showWhatsAppHelp() {
-    var overlay = document.getElementById('waHelpModal');
-    if (!overlay) buildWhatsAppHelp();
-    overlay = document.getElementById('waHelpModal');
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    window.location.href = webUrl;
   }
 
   function wireWhatsAppLinks() {
@@ -222,7 +162,7 @@
             '<label for="cf-msg">رسالتك *</label>' +
             '<textarea id="cf-msg" placeholder="اكتب رسالتك هنا..." required></textarea>' +
           '</div>' +
-          '<div class="modal-note">بعد الضغط على الزر، سيُفتح واتساب برسالة جاهزة تتضمن بريدك ورسالتك — فقط اضغط إرسال في واتساب.</div>' +
+          '<div class="modal-note">بعد الضغط على الزر، سيُفتح واتساب برسالة جاهزة تتضمن بريدك ورسالتك — فقط اضغط إرسال في واتساب.<br>لو ظهر رمز QR: افتح واتساب على موبايلك ← القائمة (⋮) ← الأجهزة المرتبطة ← ربط جهاز جديد وامسحه.</div>' +
           '<button type="submit" class="modal-cta">إرسال عبر واتساب</button>' +
         '</form>' +
       '</div>';
@@ -341,7 +281,6 @@
     initFab();
     initGallery();
     buildModal();
-    buildWhatsAppHelp();
     wireModalTriggers();
     wireWhatsAppLinks();
   }
