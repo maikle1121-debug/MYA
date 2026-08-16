@@ -29,15 +29,8 @@
       return;
     }
 
-    var desktopUrl = 'whatsapp://send?phone=' + WHATSAPP_NUMBER + (text ? '&text=' + text : '');
-    var handled = false;
-    function onBlur() { handled = true; }
-    window.addEventListener('blur', onBlur);
-    window.location.href = desktopUrl;
-    setTimeout(function () {
-      window.removeEventListener('blur', onBlur);
-      if (!handled) showWhatsAppHelp(webUrl);
-    }, 1800);
+    window.open(webUrl, '_blank', 'noopener');
+    showWhatsAppHelp();
   }
 
   function buildWhatsAppHelp() {
@@ -48,11 +41,12 @@
       '<div class="modal-box" style="position:relative">' +
         '<button class="modal-close" id="waHelpClose" aria-label="إغلاق">✕</button>' +
         '<h3><span class="ico">📱</span> افتح واتساب ويب واربط هاتفك</h3>' +
-        '<p>لسنا بحاجة لمسح الرمز بالكاميرا العادية — ربط واتساب ويب يتم من داخل تطبيق واتساب على موبايلك:</p>' +
+        '<p>لو ظهر رمز QR على الشاشة، اربطه من داخل تطبيق واتساب على موبايلك:</p>' +
         '<ol class="wa-help-steps">' +
-          '<li>اضغط زر «فتح واتساب ويب» أدناه وسيظهر رمز QR على الشاشة.</li>' +
+          '<li>تابع تبويب واتساب الذي فُتح وسيظهر رمز QR على الشاشة.</li>' +
           '<li>من تطبيق واتساب على موبايلك: اضغط <strong>القائمة (⋮)</strong> ثم <strong>الأجهزة المرتبطة</strong>.</li>' +
           '<li>اضغط <strong>ربط جهاز جديد</strong> وامسح رمز QR الظاهر على شاشة الكمبيوتر.</li>' +
+          '<li>بعد الربط تظهر محادثتك وتكتب رسالتك جاهزة للإرسال.</li>' +
         '</ol>' +
         '<button type="button" id="waHelpGo" class="modal-cta">فتح واتساب ويب</button>' +
       '</div>';
@@ -65,7 +59,9 @@
       if (e.target === overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
     });
     goBtn.addEventListener('click', function () {
-      window.open('https://web.whatsapp.com/', '_blank', 'noopener');
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+      openWhatsApp('');
     });
   }
 
