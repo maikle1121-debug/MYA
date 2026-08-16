@@ -29,7 +29,13 @@
       return;
     }
 
-    window.open(webUrl, '_blank', 'noopener');
+    var a = document.createElement('a');
+    a.href = webUrl;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
     showWhatsAppHelp();
   }
 
@@ -61,7 +67,13 @@
     goBtn.addEventListener('click', function () {
       overlay.classList.remove('open');
       document.body.style.overflow = '';
-      openWhatsApp('');
+      var a = document.createElement('a');
+      a.href = 'https://web.whatsapp.com/';
+      a.target = '_blank';
+      a.rel = 'noopener';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
     });
   }
 
