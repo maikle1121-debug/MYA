@@ -64,6 +64,14 @@
     .dot.ok { background: #10b981; }
     .dot.err { background: #ef4444; }
     .badge { font-size: .7rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #eef2ff; color: #4f46e5; }
+    @media (max-width: 700px) {
+      body { padding: 12px; }
+      .head { flex-wrap: wrap; gap: 10px; }
+      .card { padding: 16px 14px; }
+      .wrap { max-width: 100%; }
+      table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      td input { min-width: 120px; }
+    }
   </style>
 </head>
 <body>
