@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة إدارة الأسعار - MYA PDF</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+      background: linear-gradient(135deg, #eef2ff 0%, #ecfeff 100%);
+      min-height: 100vh;
+      color: #1e293b;
+      padding: 24px;
+    }
+    .wrap { max-width: 920px; margin: 0 auto; }
+    .head { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+    .head img { width: 44px; height: 44px; border-radius: 10px; }
+    .head h1 { font-size: 1.3rem; color: #0f172a; }
+    .head p { font-size: .82rem; color: #64748b; }
+    .card {
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 14px;
+      padding: 20px 22px; margin-bottom: 18px;
+      box-shadow: 0 1px 3px rgba(15,23,42,.06);
+    }
+    .card h2 { font-size: 1.02rem; color: #0f172a; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+    th {
+      background: #f1f5f9; font-size: .8rem; color: #334155;
+      padding: 9px 8px; text-align: right; border: 1px solid #e2e8f0;
+    }
+    td { padding: 6px 4px; border: 1px solid #e2e8f0; }
+    td input { width: 100%; padding: 7px 9px; font-size: .85rem; border: 1px solid #cbd5e1; border-radius: 8px; }
+    td input:focus { outline: 2px solid #4f46e5; border-color: #4f46e5; }
+    .del {
+      background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca;
+      border-radius: 8px; padding: 6px 10px; cursor: pointer; font-weight: 700; font-size: .85rem;
+    }
+    .del:hover { background: #fecaca; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: none; border-radius: 10px; padding: 11px 20px;
+      font-size: .92rem; font-weight: 700; cursor: pointer;
+    }
+    .btn-primary { background: linear-gradient(90deg,#4f46e5,#06b6d4); color: #fff; }
+    .btn-primary:hover { opacity: .92; }
+    .btn-secondary { background: #e2e8f0; color: #334155; }
+    .btn-secondary:hover { background: #cbd5e1; }
+    .row-actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+    .hint { font-size: .78rem; color: #64748b; margin-top: 8px; }
+    .add {
+      background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0;
+      border-radius: 8px; padding: 7px 14px; cursor: pointer;
+      font-weight: 700; font-size: .85rem; margin-top: 10px;
+    }
+    .add:hover { background: #d1fae5; }
+    .msg { padding: 12px 16px; border-radius: 10px; font-size: .88rem; font-weight: 600; display: none; margin-top: 14px; }
+    .msg.ok { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; display: block; }
+    .msg.err { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; display: block; }
+    .msg.wait { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; display: block; }
+    .status-line { display: flex; align-items: center; gap: 8px; font-size: .8rem; color: #64748b; margin-bottom: 14px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; }
+    .dot.ok { background: #10b981; }
+    .dot.err { background: #ef4444; }
+    .badge { font-size: .7rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #eef2ff; color: #4f46e5; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="head">
+      <img src="logo128.png" alt="MYA PDF">
+      <div>
+        <h1>لوحة إدارة الأسعار والعروض <span class="badge">MYA PDF</span></h1>
+        <p>اكتب الأسعار والعروض، ثم اضغط «إرسال» ليتم التحديث على الموقع فوراً.</p>
+      </div>
+    </div>
+
+    <div class="card" id="setupCard" style="display:none;">
+      <h2>⚠️ يلزم إعداد سريع مرة واحدة</h2>
+      <p class="hint" style="font-size:.9rem;line-height:1.8;">
+        عايز أجيب بيانات Supabase منك: <code>SUPABASE_URL</code> و <code>SUPABASE_ANON_KEY</code> — ضعهم في ملف
+        <code>supabase-config.js</code> ثم أعد فتح هذه الصفحة.
+      </p>
+    </div>
+
+    <div class="status-line" id="statusLine">
+      <span class="dot" id="statusDot"></span>
+      <span id="statusText">جاري الاتصال... افتح ملف supabase-config.js وأدخل بيانات المشروع.</span>
+    </div>
+
+    <!-- جدول الأسعار -->
+    <div class="card">
+      <h2>🏷️ جدول الأسعار</h2>
+      <table>
+        <thead>
+          <tr><th>الباقة</th><th>المدة</th><th>السعر</th><th>ملاحظات</th><th></th></tr>
+        </thead>
+        <tbody id="priceBody"></tbody>
+      </table>
+      <button class="add" onclick="addRow('price')">+ إضافة صف سعر</button>
+    </div>
+
+    <!-- جدول العروض -->
+    <div class="card">
+      <h2>🎁 جدول العروض</h2>
+      <table>
+        <thead>
+          <tr><th>العرض</th><th>الخصم</th><th>كود الخصم</th><th>صالح حتى</th><th></th></tr>
+        </thead>
+        <tbody id="offerBody"></tbody>
+      </table>
+      <button class="add" onclick="addRow('offer')">+ إضافة صف عرض</button>
+    </div>
+
+    <!-- أزرار الإرسال -->
+    <div class="card">
+      <div class="row-actions">
+        <button class="btn btn-primary" onclick="sendToSupabase()">📤 إرسال إلى الموقع</button>
+        <button class="btn btn-secondary" onclick="loadFromSupabase()">⬇️ تحميل الأسعار الحالية</button>
+      </div>
+      <p class="hint">بعد الضغط على «إرسال» تظهر الأسعار الجديدة للزوار فوراً على صفحة الاشتراك.</p>
+      <div id="msg" class="msg"></div>
+    </div>
+
+  </div>
+
+  <script src="supabase-config.js"></script>
+  <script>
+    var prices = [];
+    var offers = [];
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+    function $(id) { return document.getElementById(id); }
+    function showMsg(type, text) {
+      var m = $('msg');
+      m.className = 'msg ' + type;
+      m.textContent = text;
+    }
+    function setStatus(cls, text) {
+      var dot = $('statusDot'), t = $('statusText');
+      dot.className = 'dot' + (cls ? ' ' + cls : '');
+      t.textContent = text;
+    }
+    function isConfigured() {
+      return window.MYA_CONFIG && MYA_CONFIG.SUPABASE_URL.indexOf('your-project') === -1 && MYA_CONFIG.SUPABASE_ANON_KEY.indexOf('your-anon-key') === -1;
+    }
+    function api(url, opts) {
+      return fetch(MYA_CONFIG.SUPABASE_URL + url, {
+        headers: {
+          'apikey': MYA_CONFIG.SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + MYA_CONFIG.SUPABASE_ANON_KEY,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        ...opts
+      });
+    }
+
+    function addRow(type) {
+      if (type === 'price') prices.push({ plan: '', duration: '', price: '', note: '' });
+      else offers.push({ offer: '', discount: '', code: '', valid: '' });
+      renderTables();
+    }
+    function removeRow(type, i) {
+      if (type === 'price') prices.splice(i, 1);
+      else offers.splice(i, 1);
+      renderTables();
+    }
+    function renderTables() {
+      var pb = $('priceBody'), ob = $('offerBody');
+      pb.innerHTML = prices.map(function (p, i) {
+        return '<tr>' +
+          '<td><input data-i="' + i + '" data-f="plan" value="' + esc(p.plan) + '"></td>' +
+          '<td><input data-i="' + i + '" data-f="duration" value="' + esc(p.duration) + '"></td>' +
+          '<td><input data-i="' + i + '" data-f="price" value="' + esc(p.price) + '"></td>' +
+          '<td><input data-i="' + i + '" data-f="note" value="' + esc(p.note) + '"></td>' +
+          '<td><button class="del" onclick="removeRow(\'price\',' + i + ')">✕</button></td>' +
+          '</tr>';
+      }).join('');
+      ob.innerHTML = offers.map(function (o, i) {
+        return '<tr>' +
+          '<td><input data-i="' + i + '" data-f="offer" value="' + esc(o.offer) + '"></td>' +
+          '<td><input data-i="' + i + '" data-f="discount" value="' + esc(o.discount) + '"></td>' +
+          '<td><input data-i="' + i + '" data-f="code" value="' + esc(o.code) + '"></td>' +
+          '<td><input data-i="' + i + '" data-f="valid" value="' + esc(o.valid) + '"></td>' +
+          '<td><button class="del" onclick="removeRow(\'offer\',' + i + ')">✕</button></td>' +
+          '</tr>';
+      }).join('');
+      var inputs = pb.querySelectorAll('input'), i, j;
+      for (i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener('input', function () {
+          prices[+this.getAttribute('data-i')][this.getAttribute('data-f')] = this.value;
+        });
+      }
+      inputs = ob.querySelectorAll('input');
+      for (j = 0; j < inputs.length; j++) {
+        inputs[j].addEventListener('input', function () {
+          offers[+this.getAttribute('data-i')][this.getAttribute('data-f')] = this.value;
+        });
+      }
+    }
+
+    function loadFromSupabase() {
+      if (!isConfigured()) { setStatus('err', 'أدخل بيانات Supabase أولاً.'); return; }
+      setStatus('wait', 'جاري تحميل الأسعار الحالية...');
+      api('/rest/v1/prices?select=*', {})
+        .then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function (rows) {
+          var p = rows.filter(function (r) { return r.type === 'price'; });
+          var o = rows.filter(function (r) { return r.type === 'offer'; });
+          prices = p.map(function (r) { return { plan: r.col1, duration: r.col2, price: r.col3, note: r.col4 }; });
+          offers = o.map(function (r) { return { offer: r.col1, discount: r.col2, code: r.col3, valid: r.col4 }; });
+          renderTables();
+          setStatus('ok', 'تم تحميل الأسعار الحالية من الموقع.');
+        })
+        .catch(function (e) { setStatus('err', 'فشل التحميل: ' + e.message); });
+    }
+
+    function sendToSupabase() {
+      if (!isConfigured()) { setStatus('err', 'أدخل بيانات Supabase أولاً.'); return; }
+      setStatus('wait', 'جاري الإرسال...');
+      var all = [];
+      prices.forEach(function (p) {
+        all.push({ id: 'price:' + p.plan + ':' + p.duration, type: 'price', col1: p.plan, col2: p.duration, col3: p.price, col4: p.note });
+      });
+      offers.forEach(function (o) {
+        all.push({ id: 'offer:' + o.offer + ':' + o.code, type: 'offer', col1: o.offer, col2: o.discount, col3: o.code, col4: o.valid });
+      });
+      api('/rest/v1/prices', {
+        method: 'POST',
+        headers: { 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+        body: JSON.stringify(all)
+      })
+        .then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          setStatus('ok', 'تم إرسال الأسعار إلى الموقع بنجاح ✅');
+        })
+        .catch(function (e) { setStatus('err', 'فشل الإرسال: ' + e.message); });
+    }
+
+    (function init() {
+      if (prices.length === 0) {
+        prices = [
+          { plan: 'الخطة المجانية', duration: 'شهر', price: '0 ج.م', note: 'تجربة مجانية' },
+          { plan: 'الخطة الاحترافية', duration: 'شهري', price: '150 ج.م', note: 'باقات شهرية' },
+          { plan: 'الخطة الاحترافية', duration: 'سنوي', price: '1500 ج.م', note: 'خصم شهرين' },
+          { plan: 'اشتراك الأعمال', duration: 'شهري', price: '300 ج.م', note: 'أكثر من جهاز' },
+          { plan: 'اشتراك الأعمال', duration: 'سنوي', price: '3000 ج.م', note: 'خصم شهرين' }
+        ];
+        offers = [
+          { offer: 'اشتراك سنوي', discount: 'خصم شهرين', code: 'YEAR20', valid: '31/12/2026' },
+          { offer: 'عملاء جدد', discount: '10%', code: 'NEW10', valid: '31/12/2026' },
+          { offer: 'مكاتب محاسبة', discount: 'تواصل مباشر', code: '—', valid: 'دائم' }
+        ];
+      }
+      renderTables();
+      if (isConfigured()) {
+        setStatus('ok', 'جاهز. اكتب الأسعار ثم اضغط «إرسال».');
+      } else {
+        setStatus('err', 'أدخل بيانات Supabase في ملف supabase-config.js أولاً.');
+        $('setupCard').style.display = 'block';
+      }
+    })();
+  </script>
+</body>
+</html>
