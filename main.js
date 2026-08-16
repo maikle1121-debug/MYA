@@ -221,8 +221,10 @@
 
     function go(i) {
       index = (i + slides.length) % slides.length;
+      var rtl = getComputedStyle(document.documentElement).direction === 'rtl';
+      var offset = rtl ? index : -index;
       Array.prototype.forEach.call(slides, function (s) {
-        s.style.transform = 'translateX(-' + index * 100 + '%)';
+        s.style.transform = 'translateX(' + offset * 100 + '%)';
       });
       Array.prototype.forEach.call(dots, function (d, k) {
         d.classList.toggle('active', k === index);
