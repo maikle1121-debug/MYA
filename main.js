@@ -163,6 +163,7 @@
             '<textarea id="cf-msg" placeholder="اكتب رسالتك هنا..." required></textarea>' +
           '</div>' +
           '<div class="modal-note">بعد الضغط على الزر، سيُفتح واتساب برسالة جاهزة تتضمن بريدك ورسالتك — فقط اضغط إرسال في واتساب.<br>لو ظهر رمز QR: افتح واتساب على موبايلك ← القائمة (⋮) ← الأجهزة المرتبطة ← ربط جهاز جديد وامسحه.</div>' +
+          '<div class="form-error" id="cf-error" style="display:none">⚠️ اكتب البريد الإلكتروني والرسالة أولاً، ثم اضغط إرسال.</div>' +
           '<button type="submit" class="modal-cta">إرسال عبر واتساب</button>' +
         '</form>' +
       '</div>';
@@ -172,6 +173,15 @@
     var overlayEl = document.getElementById('contactModal');
     var closeBtn = document.getElementById('modalClose');
 
+    var emailField = document.getElementById('cf-email');
+    var msgField = document.getElementById('cf-msg');
+    var hideErr = function () {
+      var err = document.getElementById('cf-error');
+      if (err) err.style.display = 'none';
+    };
+    if (emailField) emailField.addEventListener('input', hideErr);
+    if (msgField) msgField.addEventListener('input', hideErr);
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var name = document.getElementById('cf-name').value.trim();
@@ -179,7 +189,11 @@
       var topic = document.getElementById('cf-topic').value;
       var msg = document.getElementById('cf-msg').value.trim();
 
-      if (!email || !msg) return;
+      if (!email || !msg) {
+        var err = document.getElementById('cf-error');
+        if (err) err.style.display = 'block';
+        return;
+      }
       var text = 'مرحباً MYA PDF 👋\n' +
         (name ? 'الاسم: ' + name + '\n' : '') +
         'البريد الإلكتروني: ' + email + '\n' +

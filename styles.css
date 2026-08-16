@@ -1305,6 +1305,16 @@ ul, ol { list-style: none; }
   margin-bottom: 18px;
   line-height: 1.7;
 }
+.form-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: .82rem;
+  font-weight: 700;
+  padding: 10px 14px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
 .modal-cta {
   width: 100%;
   display: flex; align-items: center; justify-content: center; gap: 10px;
