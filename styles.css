@@ -29,7 +29,13 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 body {
   font-family: 'Cairo', 'Segoe UI', Tahoma, Arial, sans-serif;
@@ -37,9 +43,13 @@ body {
   color: var(--ink);
   line-height: 1.8;
   overflow-x: hidden;
+  overflow-wrap: break-word;
+  -webkit-tap-highlight-color: transparent;
 }
 
-img { max-width: 100%; display: block; }
+img { max-width: 100%; display: block; height: auto; }
+
+main { display: block; }
 a { color: var(--primary); text-decoration: none; transition: color .2s; }
 a:hover { color: var(--primary-dark); }
 ul, ol { list-style: none; }
@@ -922,6 +932,10 @@ ul, ol { list-style: none; }
 @media (max-width: 1024px) {
   .features-grid, .plans { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: repeat(2, 1fr); }
+  .float-card.f1 { right: 0; }
+  .float-card.f2 { left: 0; }
+  .gallery { max-width: 480px; }
+  input, select, textarea { font-size: 16px; }
 }
 
 @media (max-width: 860px) {
@@ -939,6 +953,7 @@ ul, ol { list-style: none; }
     box-shadow: var(--shadow-lg);
     display: none;
     max-height: calc(100vh - 70px);
+    max-height: calc(100dvh - 70px);
     overflow-y: auto;
   }
   .nav-links.open { display: flex; }
@@ -946,6 +961,11 @@ ul, ol { list-style: none; }
   .nav-links .btn { margin: 8px 0 0; }
   .hero-grid { grid-template-columns: 1fr; gap: 56px; }
   .hero { padding: 60px 0 80px; }
+  .hero h1 { font-size: clamp(1.9rem, 6.5vw, 2.7rem); }
+  .hero p.lead { font-size: 1rem; }
+  .gallery { max-width: 100%; margin-inline: auto; }
+  .browser { transform: none; }
+  .float-card { font-size: .76rem; padding: 10px 12px; }
   .float-card.f1 { right: 0; }
   .float-card.f2 { left: 0; }
   .steps { grid-template-columns: 1fr; }
@@ -955,13 +975,24 @@ ul, ol { list-style: none; }
 
 @media (max-width: 640px) {
   .features-grid, .plans, .pay-grid { grid-template-columns: 1fr; }
+  .dl-cards { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 28px; }
   .section { padding: 60px 0; }
   .plan.featured { transform: none; }
   .plan.featured:hover { transform: translateY(-8px); }
   .cta-box { padding: 40px 24px; }
+  .cta-box h3 { font-size: 1.45rem; }
   .hero-actions .btn { width: 100%; }
+  .section-subtitle { font-size: .96rem; margin-bottom: 32px; }
+  .page-hero { padding: 56px 0 48px; }
+  .stats-grid { gap: 16px; }
+  .gallery-img img { max-height: 400px; }
+  .compare th, .compare td { padding: 10px 8px; font-size: .84rem; }
+  .pv-card { padding: 24px 18px; }
+  .faq-item summary { padding: 15px 16px; }
+  .dl-card { padding: 32px 22px; }
+  .modal-overlay { padding: 12px; }
 }
 
 /* ============================================================
@@ -1245,6 +1276,14 @@ ul, ol { list-style: none; }
   font-size: 1.2rem;
 }
 .modal-box > p { color: var(--muted); font-size: .92rem; margin-bottom: 20px; }
+.wa-help-steps {
+  margin: 0 0 20px;
+  padding-right: 20px;
+  color: var(--ink-soft);
+  font-size: .9rem;
+  line-height: 2;
+}
+.wa-help-steps strong { color: var(--ink); }
 .form-field { margin-bottom: 14px; }
 .form-field label { display: block; font-size: .84rem; font-weight: 700; color: var(--ink-soft); margin-bottom: 6px; }
 .form-field input, .form-field select, .form-field textarea {
@@ -1331,4 +1370,40 @@ ul, ol { list-style: none; }
 @media (max-width: 640px) {
   .fab { width: 52px; height: 52px; bottom: 18px; inset-inline-start: 18px; font-size: 1.5rem; }
   .to-top { bottom: 18px; inset-inline-end: 18px; width: 42px; height: 42px; }
+}
+
+/* ---------- Very small phones ---------- */
+@media (max-width: 380px) {
+  .container { padding: 0 14px; }
+  .brand-name { font-size: 1rem; }
+  .brand-sub { font-size: .62rem; }
+  .btn { padding: 12px 20px; font-size: .92rem; }
+  .hero h1 { font-size: 1.7rem; }
+  .hero-badge { font-size: .74rem; padding: 6px 12px; }
+  .stat-num { font-size: 1.7rem; }
+  .pv-card h2 { font-size: 1.15rem; }
+  .footer-contact li { font-size: .84rem; }
+  .footer-contact li a { overflow-wrap: anywhere; }
+}
+
+/* ---------- Big screens / TV ---------- */
+@media (min-width: 1600px) {
+  :root { --maxw: 1400px; }
+  html { font-size: 17px; }
+  .hero { padding: 120px 0 150px; }
+  .section { padding: 110px 0; }
+  .stats-strip { padding: 46px 0; }
+  .site-header { font-size: 1.02rem; }
+}
+
+/* ---------- Scrollable tables (privacy & long content) ---------- */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 16px 0;
+}
+.table-scroll table { margin: 0; }
+.table-scroll-wide table { min-width: 620px; }
+@media (max-width: 420px) {
+  .table-scroll-wide table { min-width: 560px; }
 }

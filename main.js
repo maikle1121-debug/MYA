@@ -36,8 +36,45 @@
     window.location.href = desktopUrl;
     setTimeout(function () {
       window.removeEventListener('blur', onBlur);
-      if (!handled) window.location.href = webUrl;
+      if (!handled) showWhatsAppHelp(webUrl);
     }, 1800);
+  }
+
+  function buildWhatsAppHelp() {
+    var overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.id = 'waHelpModal';
+    overlay.innerHTML =
+      '<div class="modal-box" style="position:relative">' +
+        '<button class="modal-close" id="waHelpClose" aria-label="إغلاق">✕</button>' +
+        '<h3><span class="ico">📱</span> افتح واتساب ويب واربط هاتفك</h3>' +
+        '<p>لسنا بحاجة لمسح الرمز بالكاميرا العادية — ربط واتساب ويب يتم من داخل تطبيق واتساب على موبايلك:</p>' +
+        '<ol class="wa-help-steps">' +
+          '<li>اضغط زر «فتح واتساب ويب» أدناه وسيظهر رمز QR على الشاشة.</li>' +
+          '<li>من تطبيق واتساب على موبايلك: اضغط <strong>القائمة (⋮)</strong> ثم <strong>الأجهزة المرتبطة</strong>.</li>' +
+          '<li>اضغط <strong>ربط جهاز جديد</strong> وامسح رمز QR الظاهر على شاشة الكمبيوتر.</li>' +
+        '</ol>' +
+        '<button type="button" id="waHelpGo" class="modal-cta">فتح واتساب ويب</button>' +
+      '</div>';
+    document.body.appendChild(overlay);
+
+    var closeBtn = document.getElementById('waHelpClose');
+    var goBtn = document.getElementById('waHelpGo');
+    closeBtn.addEventListener('click', function () { overlay.classList.remove('open'); document.body.style.overflow = ''; });
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+    });
+    goBtn.addEventListener('click', function () {
+      window.open('https://web.whatsapp.com/', '_blank', 'noopener');
+    });
+  }
+
+  function showWhatsAppHelp() {
+    var overlay = document.getElementById('waHelpModal');
+    if (!overlay) buildWhatsAppHelp();
+    overlay = document.getElementById('waHelpModal');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
   }
 
   function wireWhatsAppLinks() {
@@ -296,6 +333,7 @@
     initFab();
     initGallery();
     buildModal();
+    buildWhatsAppHelp();
     wireModalTriggers();
     wireWhatsAppLinks();
   }
